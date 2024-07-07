@@ -1,3 +1,5 @@
+import 'package:akadomen/utils/constants/images.dart';
+import 'package:akadomen/utils/extentions/extentions.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -5,9 +7,16 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("akadomen"),
+    return Scaffold(
+      body: Container(
+        width: context.width,
+        height: context.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage(ImageManager.background),
+          ),
+        ),
       ),
     );
   }
