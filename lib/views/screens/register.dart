@@ -31,6 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
       log('$_username && $_password && $_confirmPassword');
+      Navigator.pop(context);
     }
   }
 
