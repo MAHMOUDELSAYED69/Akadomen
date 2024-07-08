@@ -43,7 +43,7 @@ abstract class AppTheme {
       fontFamily: 'Poppins',
       useMaterial3: true,
       brightness: Brightness.light,
-      scaffoldBackgroundColor: ColorManager.darkGrey,
+      scaffoldBackgroundColor: ColorManager.brown,
       appBarTheme: AppBarTheme(
         elevation: BorderSide.strokeAlignOutside,
         backgroundColor: ColorManager.brown,

@@ -31,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
       log('$_username && $_password');
+      Navigator.pushReplacementNamed(context, RouteManager.home);
     }
   }
 
@@ -44,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
         decoration: const BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage(ImageManager.background),
+            image: AssetImage(ImageManager.authBackground),
           ),
         ),
         child: Container(

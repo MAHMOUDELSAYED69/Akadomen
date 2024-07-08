@@ -3,10 +3,8 @@ import 'dart:developer';
 import 'package:akadomen/utils/extentions/extentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/images.dart';
-import '../../utils/constants/routes.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 
@@ -46,7 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         decoration: const BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage(ImageManager.background),
+            image: AssetImage(ImageManager.authBackground),
           ),
         ),
         child: Container(
