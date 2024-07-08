@@ -26,16 +26,17 @@ abstract class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           foregroundColor: ColorManager.white,
+          elevation: 4,
           textStyle: TextStyle(
-              fontSize: 16.spMin,
+              fontSize: 22.spMin,
               color: ColorManager.white,
               fontWeight: FontWeight.w500),
           overlayColor: ColorManager.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(3),
+            borderRadius: BorderRadius.circular(40),
           ),
           backgroundColor: ColorManager.brown,
-          fixedSize: const Size(double.maxFinite, 54),
+          fixedSize: Size(double.maxFinite, 54.h),
         ),
       ),
       iconTheme: const IconThemeData(color: ColorManager.black),
@@ -56,42 +57,70 @@ abstract class AppTheme {
       ),
       textTheme: TextTheme(
         bodyLarge: TextStyle(
-            fontSize: 32.spMin,
+            fontSize: 22.spMin,
             color: ColorManager.brown,
-            fontWeight: FontWeight.bold),
+            fontWeight: FontWeight.bold), 
         bodyMedium: TextStyle(
-            fontSize: 16.spMin,
-            color: ColorManager.brown,
-            fontWeight: FontWeight.w500),
-        bodySmall: TextStyle(
-          fontSize: 22.spMin,
+          fontSize: 16.spMin,
           fontWeight: FontWeight.w500,
           color: ColorManager.white,
         ),
+        bodySmall: TextStyle(
+            fontSize: 14.spMin,
+            color: ColorManager.brown,  
+            fontWeight: FontWeight.w500),
+        displaySmall: TextStyle(
+            fontSize: 14.spMin,
+            color: ColorManager.white,
+            fontWeight: FontWeight.w500),
         displayMedium: TextStyle(
             fontSize: 16.spMin,
-            color: ColorManager.grey,
+            color: ColorManager.brown,
             fontWeight: FontWeight.w500),
       ),
       inputDecorationTheme: InputDecorationTheme(
         isCollapsed: true,
         isDense: true,
-        errorStyle: const TextStyle(fontSize: 16, color: ColorManager.error),
-        focusedBorder: const OutlineInputBorder(borderSide: BorderSide.none),
-        errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-                color: ColorManager.error,
-                width: 2,
-                strokeAlign: BorderSide.strokeAlignCenter)),
-        focusedErrorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-                color: ColorManager.error,
-                width: 2,
-                strokeAlign: BorderSide.strokeAlignCenter)),
-        enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none),
-        contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 15.h),
-        filled: true,
+        errorStyle:  TextStyle(fontSize: 14.spMin, color: ColorManager.error),
         fillColor: ColorManager.white,
+        filled: true,
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12),
+          ),
+          borderSide: BorderSide(
+            width: 1,
+            color: ColorManager.brown,
+          ),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12),
+          ),
+          borderSide: BorderSide(
+            width: 1,
+            color: ColorManager.grey,
+          ),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12),
+          ),
+          borderSide: BorderSide(
+            width: 1,
+            color: ColorManager.error,
+          ),
+        ),
+        focusedErrorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12),
+          ),
+          borderSide: BorderSide(
+            width: 1,
+            color: ColorManager.error,
+          ),
+        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 15.h),
       ),
     );
   }
