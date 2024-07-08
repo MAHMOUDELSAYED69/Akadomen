@@ -47,7 +47,7 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
     return Column(children: [
       Container(
         alignment: AlignmentDirectional.centerStart,
-        padding: EdgeInsets.only(top: 16.h, bottom: 8.h),
+        padding: EdgeInsets.only(top: 12.h, bottom: 5.h),
         child: Text(
           widget.title ?? "",
           style: context.textTheme.bodySmall?.copyWith(fontSize: 14.spMin),
@@ -75,17 +75,12 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
         decoration: InputDecoration(
           isCollapsed: true,
           isDense: true,
-          errorMaxLines: 2,
-          errorStyle: context.textTheme.bodySmall
-              ?.copyWith(color: ColorManager.error, fontSize: 16.spMin),
           suffixIcon: widget.isVisible == true
               ? _buildSuffixIcon(Icons.visibility_off, Icons.visibility)
               : null,
-          contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 10),
           filled: true,
           fillColor: ColorManager.white,
           hintText: widget.hintText,
-          hintStyle: context.textTheme.bodySmall,
           enabledBorder: context.inputDecoration.enabledBorder,
           focusedBorder: context.inputDecoration.focusedBorder,
           errorBorder: context.inputDecoration.errorBorder,

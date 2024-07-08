@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:akadomen/utils/constants/colors.dart';
 import 'package:akadomen/utils/constants/images.dart';
+import 'package:akadomen/utils/constants/routes.dart';
 import 'package:akadomen/utils/extentions/extentions.dart';
 import 'package:akadomen/views/widgets/custom_button.dart';
 import 'package:akadomen/views/widgets/custom_text_field.dart';
@@ -47,61 +48,69 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         child: Container(
-          width: context.width / 2,
-          height: context.height / 1.2,
+          width: context.width / 2.2,
+          height: context.height / 1.3,
           decoration: BoxDecoration(
             color: ColorManager.white,
             borderRadius: BorderRadius.circular(26),
           ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.width / 15),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Log in',
-                    style: context.textTheme.bodyLarge,
-                  ),
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    direction: Axis.horizontal,
-                    children: [
-                      Text(
-                        'Don’t have an ccount? ',
-                        style: context.textTheme.displayMedium,
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          ' Sign up',
-                          style: context.textTheme.displayMedium?.copyWith(
-                              decoration: TextDecoration.underline,
-                              decorationColor: ColorManager.brown),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.width / 15),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 10.h),
+                    Text(
+                      'Log in',
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      direction: Axis.horizontal,
+                      children: [
+                        Text(
+                          'Don’t have an ccount?  ',
+                          style: context.textTheme.displayMedium,
                         ),
-                      )
-                    ],
-                  ),
-                  Image.asset(
-                    ImageManager.akadomenLogo,
-                    height: 50.sp,
-                    width: 50.sp,
-                  ),
-                  MyTextFormField(
-                    title: 'Your username',
-                    onSaved: (data) => _username = data,
-                  ),
-                  MyTextFormField(
-                    title: 'Your password',
-                   obscureText: true,
-                    onSaved: (data) => _password = data,
-                  ),
-                  SizedBox(height: 50.h),
-                  MyElevatedButton(
-                    title: 'Log in',
-                    onPressed: _login,
-                  ),
-                ],
+                        GestureDetector(
+                          child: Text(
+                            'Sign up',
+                            style: context.textTheme.displayMedium?.copyWith(
+                                decoration: TextDecoration.underline,
+                                decorationColor: ColorManager.brown),
+                          ),
+                          onTap: () => Navigator.pushNamed(
+                              context, RouteManager.register),
+                        )
+                      ],
+                    ),
+                    Image.asset(
+                      ImageManager.akadomenLogo,
+                      height: 50.sp,
+                      width: 50.sp,
+                    ),
+                    MyTextFormField(
+                      title: 'Your username',
+                      hintText: 'Enter your username',
+                      onSaved: (data) => _username = data,
+                    ),
+                    MyTextFormField(
+                      title: 'Your password',
+                      hintText: 'Enter your password',
+                      obscureText: true,
+                      onSaved: (data) => _password = data,
+                    ),
+                    SizedBox(height: 40.h),
+                    MyElevatedButton(
+                      title: 'Log in',
+                      onPressed: _login,
+                    ),
+                    SizedBox(height: 10.h),
+                  ],
+                ),
               ),
             ),
           ),

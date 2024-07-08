@@ -2,7 +2,6 @@ import 'package:akadomen/utils/extentions/extentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../utils/constants/colors.dart';
 
 class MyElevatedButton extends StatelessWidget {
   const MyElevatedButton({

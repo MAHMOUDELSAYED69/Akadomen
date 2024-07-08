@@ -31,7 +31,7 @@ abstract class AppTheme {
               fontSize: 22.spMin,
               color: ColorManager.white,
               fontWeight: FontWeight.w500),
-          overlayColor: ColorManager.white,
+          overlayColor: ColorManager.error,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40),
           ),
@@ -59,7 +59,7 @@ abstract class AppTheme {
         bodyLarge: TextStyle(
             fontSize: 22.spMin,
             color: ColorManager.brown,
-            fontWeight: FontWeight.bold), 
+            fontWeight: FontWeight.bold),
         bodyMedium: TextStyle(
           fontSize: 16.spMin,
           fontWeight: FontWeight.w500,
@@ -67,7 +67,7 @@ abstract class AppTheme {
         ),
         bodySmall: TextStyle(
             fontSize: 14.spMin,
-            color: ColorManager.brown,  
+            color: ColorManager.brown,
             fontWeight: FontWeight.w500),
         displaySmall: TextStyle(
             fontSize: 14.spMin,
@@ -81,7 +81,12 @@ abstract class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         isCollapsed: true,
         isDense: true,
-        errorStyle:  TextStyle(fontSize: 14.spMin, color: ColorManager.error),
+        errorStyle: TextStyle(
+          fontSize: 12.spMin,
+          color: ColorManager.error,
+          height: 0.5
+        ),
+        hintStyle: TextStyle(fontSize: 12.spMin, color: ColorManager.grey),
         fillColor: ColorManager.white,
         filled: true,
         focusedBorder: const OutlineInputBorder(
@@ -120,7 +125,7 @@ abstract class AppTheme {
             color: ColorManager.error,
           ),
         ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 15.h),
+        contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 10),
       ),
     );
   }

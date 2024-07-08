@@ -1,3 +1,4 @@
+import 'package:akadomen/views/screens/register.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/constants/routes.dart';
@@ -12,6 +13,8 @@ abstract class AppRouter {
         return _materialPageRoute(const SplashScreen());
       case RouteManager.login:
         return _materialPageRoute(const LoginScreen());
+      case RouteManager.register:
+        return _materialPageRoute(const RegisterScreen());
       default:
         return null;
     }
