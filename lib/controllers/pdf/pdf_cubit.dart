@@ -18,7 +18,8 @@ class PDFCubit extends Cubit<PDFState> {
             children: [
               pw.Text('City Road - empty',
                   style: const pw.TextStyle(fontSize: 14)),
-              pw.Text('Phone: empty', style: const pw.TextStyle(fontSize: 14)),
+              pw.Text('Phone: 01061172139',
+                  style: const pw.TextStyle(fontSize: 14)),
               pw.Text('Tax Number: empty',
                   style: const pw.TextStyle(fontSize: 14)),
               pw.SizedBox(height: 10),

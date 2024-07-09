@@ -23,34 +23,32 @@ class AddAndRemoveCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
-            height: 17.sp,
-            width: 17.sp,
-            child: FloatingActionButton(
-              heroTag: UniqueKey(),
-              hoverColor: white,
-              splashColor: white,
-              backgroundColor: white.withOpacity(0.7),
-              onPressed: onDecrement,
-              child: Icon(
-                Icons.remove,
-                color: black,
-                size: 8.sp,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 17.sp,
-            width: 17.sp,
+            height: 16.sp,
+            width: 16.sp,
             child: FloatingActionButton(
               heroTag: UniqueKey(),
               hoverColor: white,
               splashColor: white,
               backgroundColor: white.withOpacity(0.7),
               onPressed: onIncrement,
-              child: Icon(
+              child: const Icon(
                 Icons.add,
                 color: black,
-                size: 8.sp,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 16.sp,
+            width: 16.sp,
+            child: FloatingActionButton(
+              heroTag: UniqueKey(),
+              hoverColor: white,
+              splashColor: white,
+              backgroundColor: white.withOpacity(0.7),
+              onPressed: onDecrement,
+              child: const Icon(
+                Icons.remove,
+                color: black,
               ),
             ),
           ),
