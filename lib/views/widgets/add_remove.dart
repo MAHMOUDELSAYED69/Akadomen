@@ -31,10 +31,7 @@ class AddAndRemoveCard extends StatelessWidget {
               splashColor: white,
               backgroundColor: white.withOpacity(0.7),
               onPressed: onIncrement,
-              child: const Icon(
-                Icons.add,
-                color: black,
-              ),
+              child: Icon(Icons.add, color: black, size: 7.sp),
             ),
           ),
           SizedBox(
@@ -46,10 +43,7 @@ class AddAndRemoveCard extends StatelessWidget {
               splashColor: white,
               backgroundColor: white.withOpacity(0.7),
               onPressed: onDecrement,
-              child: const Icon(
-                Icons.remove,
-                color: black,
-              ),
+              child: Icon(Icons.remove, color: black, size: 7.sp),
             ),
           ),
         ],

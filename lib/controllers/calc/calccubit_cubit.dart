@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 
-class CalcCubit extends Cubit<Map<String, int>> {
-  CalcCubit() : super({});
+class CounterCubit extends Cubit<Map<String, int>> {
+  CounterCubit() : super({});
 
   void increment(String juiceType) {
     final currentCount = state[juiceType] ?? 0;
@@ -17,3 +17,4 @@ class CalcCubit extends Cubit<Map<String, int>> {
 
   void reset() => emit({});
 }
+

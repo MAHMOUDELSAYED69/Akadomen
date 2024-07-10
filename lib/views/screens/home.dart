@@ -6,6 +6,7 @@ import 'package:akadomen/views/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../controllers/calc/calccubit_cubit.dart';
 import '../../utils/constants/images.dart';
 import '../widgets/add_remove.dart';
 import '../widgets/item_card.dart';
@@ -67,8 +68,10 @@ class HomeScreen extends StatelessWidget {
                         name: juice.name,
                       ),
                       AddAndRemoveCard(
-                        onDecrement: () {},
-                        onIncrement: () {},
+                        onDecrement: () =>
+                            context.read<CounterCubit>().decrement(juice.name),
+                        onIncrement: () =>
+                            context.read<CounterCubit>().increment(juice.name),
                       )
                     ],
                   );
@@ -99,10 +102,25 @@ class HomeScreen extends StatelessWidget {
                     ImageManager.akadomenLogo,
                     height: 150,
                   ),
-                  MyElevatedButton(
-                    title: 'get invoice',
-                    onPressed: context.read<InvoiceCubit>().generateInvoice,
-                  )
+                  BlocBuilder<CounterCubit, Map<String, int>>(
+                    builder: (context, juiceCounts) {
+                      return Column(
+                        children: [
+                          ...juiceCounts.entries.map((entry) {
+                            return Text('${entry.key}: ${entry.value}',
+                                style: context.textTheme.displayMedium);
+                          }),
+                          MyElevatedButton(
+                            title: 'get invoice',
+                            onPressed: () {
+                              context.read<InvoiceCubit>().generateInvoice();
+                              context.read<CounterCubit>().reset();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ],
               ),
             )
