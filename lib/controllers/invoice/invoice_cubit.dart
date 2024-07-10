@@ -1,15 +1,55 @@
+import 'package:akadomen/utils/constants/images.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:akadomen/repositories/fruits.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:typed_data';
 
 part 'invoice_state.dart';
 
 class InvoiceCubit extends Cubit<InvoiceState> {
   InvoiceCubit() : super(InvoiceInitial());
 
-  Future<pw.Document> generateInvoice() async {
+  Future<pw.Document> generateInvoice(Map<String, int> juiceCounts) async {
     final pdf = pw.Document();
+
+    final Uint8List logoBytes = await rootBundle
+        .load(ImageManager.akadomenLogo)
+        .then((value) => value.buffer.asUint8List());
+
+    final List<List<String>> data = juiceCounts.entries
+        .map((entry) {
+          if (entry.value > 0) {
+            final juice = FruitsRepositorie.juiceList
+                .firstWhere((j) => j.name == entry.key);
+            final price = juice.price;
+            final quantity = entry.value;
+            final total = price * quantity;
+            return [
+              juice.name,
+              price.toStringAsFixed(2),
+              '0.00',
+              '0.00',
+              total.toStringAsFixed(2),
+              quantity.toString()
+            ];
+          } else {
+            return <String>[];
+          }
+        })
+        .where((element) => element.isNotEmpty)
+        .toList();
+    final totalAmount =
+        data.fold<double>(0, (sum, item) => sum + double.parse(item[4]));
+    const tax = 0.00;
+    final grandTotal = totalAmount + tax;
+
+    final now = DateTime.now();
+    final formattedDate = DateFormat('yyyy-MM-dd').format(now);
+    final formattedTime = DateFormat('HH:mm:ss').format(now);
 
     pdf.addPage(
       pw.Page(
@@ -17,6 +57,11 @@ class InvoiceCubit extends Cubit<InvoiceState> {
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
+              pw.Image(
+                pw.MemoryImage(logoBytes),
+                width: 150,
+                height: 150,
+              ),
               pw.Text('City Road - empty',
                   style: const pw.TextStyle(fontSize: 14)),
               pw.Text('Phone: empty', style: const pw.TextStyle(fontSize: 14)),
@@ -36,29 +81,27 @@ class InvoiceCubit extends Cubit<InvoiceState> {
               pw.Text('Simple Sales Invoice',
                   style: const pw.TextStyle(fontSize: 18)),
               pw.SizedBox(height: 10),
-              pw.Text('Date: 2024-07-08',
+              pw.Text('Date: $formattedDate',
                   style: const pw.TextStyle(fontSize: 14)),
-              pw.Text('Time: 19:04 PM',
+              pw.Text('Time: $formattedTime',
                   style: const pw.TextStyle(fontSize: 14)),
               pw.SizedBox(height: 10),
               pw.Text('Customer Name: empty',
                   style: const pw.TextStyle(fontSize: 14)),
+              pw.SizedBox(height: 10),
               pw.SizedBox(height: 10),
               pw.Table.fromTextArray(
                 context: context,
                 border: pw.TableBorder.all(),
                 headers: <String>[
                   'Item',
-                  'Price',
-                  'Tax',
-                  'Discount',
-                  'Total',
+                  'Price (EGP)',
+                  'Tax (EGP)',
+                  'Discount (EGP)',
+                  'Total (EGP)',
                   'Quantity'
                 ],
-                data: <List<String>>[
-                  <String>['orange', '1.00', '0.15', '0.00', '1.15', '1'],
-                  <String>['lemon', '5.00', '0.75', '0.00', '5.75', '1'],
-                ],
+                data: data,
               ),
               pw.SizedBox(height: 10),
               pw.Row(
@@ -67,11 +110,13 @@ class InvoiceCubit extends Cubit<InvoiceState> {
                   pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
-                      pw.Text('Total Amount: \$6.00',
+                      pw.Text(
+                          'Total Amount: ${totalAmount.toStringAsFixed(2)} EGP',
                           style: const pw.TextStyle(fontSize: 14)),
-                      pw.Text('Tax: \$0.90',
+                      pw.Text('Tax: ${tax.toStringAsFixed(2)} EGP',
                           style: const pw.TextStyle(fontSize: 14)),
-                      pw.Text('Grand Total: \$6.90',
+                      pw.Text(
+                          'Grand Total: ${grandTotal.toStringAsFixed(2)} EGP',
                           style: pw.TextStyle(
                               fontSize: 14, fontWeight: pw.FontWeight.bold)),
                     ],
@@ -83,10 +128,11 @@ class InvoiceCubit extends Cubit<InvoiceState> {
         },
       ),
     );
-    // await Printing.layoutPdf(
-    //   onLayout: (PdfPageFormat format) async => pdf.save(),
-    // );
+
     await Printing.sharePdf(bytes: await pdf.save(), filename: 'invoice.pdf');
     return pdf;
   }
 }
+    // await Printing.layoutPdf(
+    //   onLayout: (PdfPageFormat format) async => pdf.save(),
+    // );
