@@ -46,7 +46,7 @@ class ItemCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text('EG',
+                Text('EGP',
                     style: context.textTheme.displaySmall?.copyWith(
                       fontSize: 5.sp,
                       shadows: [

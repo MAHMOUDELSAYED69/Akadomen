@@ -23,7 +23,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
     final List<List<String>> data = juiceCounts.entries
         .map((entry) {
           if (entry.value > 0) {
-            final juice = FruitsRepositorie.juiceList
+            final juice = FruitsRepository.juiceList
                 .firstWhere((j) => j.name == entry.key);
             final price = juice.price;
             final quantity = entry.value;

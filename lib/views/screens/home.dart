@@ -36,13 +36,13 @@ class HomeScreen extends StatelessWidget {
                     right: context.width / 20,
                     top: 10,
                     bottom: 50),
-                itemCount: FruitsRepositorie.juiceList.length,
+                itemCount: FruitsRepository.juiceList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20,
                     crossAxisCount: 4),
                 itemBuilder: (context, index) {
-                  final juice = FruitsRepositorie.juiceList[index];
+                  final juice = FruitsRepository.juiceList[index];
                   return Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
@@ -102,18 +102,26 @@ class HomeScreen extends StatelessWidget {
                     ImageManager.akadomenLogo,
                     height: 150,
                   ),
+                  SizedBox(height: 10.h),
                   BlocBuilder<CounterCubit, Map<String, int>>(
                     builder: (context, juiceCounts) {
+                      final filteredJuiceCounts = juiceCounts.entries
+                          .where((entry) => entry.value > 0)
+                          .toList();
+
                       return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ...juiceCounts.entries.map((entry) {
+                          ...filteredJuiceCounts.map((entry) {
                             return Text('${entry.key}: ${entry.value}',
                                 style: context.textTheme.displayMedium);
                           }),
                           MyElevatedButton(
                             title: 'get invoice',
                             onPressed: () {
-                              context.read<InvoiceCubit>().generateInvoice();
+                              context
+                                  .read<InvoiceCubit>()
+                                  .generateInvoice(juiceCounts);
                               context.read<CounterCubit>().reset();
                             },
                           ),
