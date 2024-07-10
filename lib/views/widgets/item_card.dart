@@ -14,10 +14,12 @@ class ItemCard extends StatelessWidget {
         top: 15,
         left: 15,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(name,
                 style: context.textTheme.displaySmall?.copyWith(
                   fontSize: 5.sp,
+                  fontWeight: FontWeight.w600,
                   shadows: [
                     const Shadow(
                       offset: Offset(1, -1),

@@ -1,7 +1,10 @@
+import 'package:akadomen/controllers/invoice/invoice_cubit.dart';
 import 'package:akadomen/repositories/fruits.dart';
 import 'package:akadomen/utils/constants/colors.dart';
 import 'package:akadomen/utils/extentions/extentions.dart';
+import 'package:akadomen/views/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/constants/images.dart';
 import '../widgets/add_remove.dart';
@@ -28,7 +31,10 @@ class HomeScreen extends StatelessWidget {
             Expanded(
               child: GridView.builder(
                 padding: EdgeInsets.only(
-                    left: 10.w, right: 15.w, top: 10, bottom: 50),
+                    left: context.width / 20,
+                    right: context.width / 20,
+                    top: 10,
+                    bottom: 50),
                 itemCount: FruitsRepositorie.juiceList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisSpacing: 20,
@@ -70,7 +76,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(right: 20),
+              margin: EdgeInsets.only(right: context.width / 30),
               padding: const EdgeInsets.all(20),
               width: context.width / 5,
               height: context.height / 1.2,
@@ -93,6 +99,10 @@ class HomeScreen extends StatelessWidget {
                     ImageManager.akadomenLogo,
                     height: 150,
                   ),
+                  MyElevatedButton(
+                    title: 'get invoice',
+                    onPressed: context.read<InvoiceCubit>().generateInvoice,
+                  )
                 ],
               ),
             )

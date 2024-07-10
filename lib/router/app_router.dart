@@ -3,8 +3,7 @@ import 'package:akadomen/views/screens/home.dart';
 import 'package:akadomen/views/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../controllers/pdf/pdf_cubit.dart';
+import '../controllers/invoice/invoice_cubit.dart';
 import '../utils/constants/routes.dart';
 import '../views/screens/login.dart';
 import '../views/screens/splash.dart';
@@ -22,7 +21,7 @@ abstract class AppRouter {
             const RegisterScreen());
       case RouteManager.home:
         return PageTransitionManager.materialSlideTransition(BlocProvider(
-          create: (context) => PDFCubit(),
+          create: (context) => InvoiceCubit(),
           child: const HomeScreen(),
         ));
       default:

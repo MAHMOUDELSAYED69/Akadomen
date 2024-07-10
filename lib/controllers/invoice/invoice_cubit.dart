@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart' as pw;
-part 'pdf_state.dart';
+import 'package:printing/printing.dart';
 
-class PDFCubit extends Cubit<PDFState> {
-  PDFCubit() : super(PDFInitial());
+part 'invoice_state.dart';
+
+class InvoiceCubit extends Cubit<InvoiceState> {
+  InvoiceCubit() : super(InvoiceInitial());
 
   Future<pw.Document> generateInvoice() async {
     final pdf = pw.Document();
@@ -18,8 +19,7 @@ class PDFCubit extends Cubit<PDFState> {
             children: [
               pw.Text('City Road - empty',
                   style: const pw.TextStyle(fontSize: 14)),
-              pw.Text('Phone: 01061172139',
-                  style: const pw.TextStyle(fontSize: 14)),
+              pw.Text('Phone: empty', style: const pw.TextStyle(fontSize: 14)),
               pw.Text('Tax Number: empty',
                   style: const pw.TextStyle(fontSize: 14)),
               pw.SizedBox(height: 10),
@@ -83,7 +83,10 @@ class PDFCubit extends Cubit<PDFState> {
         },
       ),
     );
-
+    // await Printing.layoutPdf(
+    //   onLayout: (PdfPageFormat format) async => pdf.save(),
+    // );
+    await Printing.sharePdf(bytes: await pdf.save(), filename: 'invoice.pdf');
     return pdf;
   }
 }
