@@ -12,7 +12,7 @@ import '../widgets/add_remove.dart';
 import '../widgets/item_card.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key});  
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40),
+                          borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
                               offset: const Offset(1, -1),

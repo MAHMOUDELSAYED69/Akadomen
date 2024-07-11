@@ -1,11 +1,36 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:akadomen/router/app_router.dart';
 import 'package:akadomen/utils/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'utils/themes/app_theme.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    await windowManager.ensureInitialized();
+
+    WindowOptions windowOptions = const WindowOptions(
+      size: Size(1280, 800),
+      center: true,
+      backgroundColor: Colors.transparent,
+      title: 'Akadomen',
+      titleBarStyle: TitleBarStyle.normal,
+    );
+
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+      await windowManager.focus();
+      await windowManager.setResizable(true);
+      await windowManager.setMinimumSize(const Size(1024, 768));
+    });
+  }
+
   runApp(const MyApp());
 }
 
@@ -15,7 +40,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(360, 690),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (_, child) => MaterialApp(
