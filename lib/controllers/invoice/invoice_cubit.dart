@@ -1,6 +1,9 @@
 import 'package:akadomen/utils/constants/images.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meta/meta.dart';
+import 'package:pdf/pdf.dart' show PdfColor;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:akadomen/repositories/fruits.dart';
@@ -15,6 +18,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
 
   Future<pw.Document> generateInvoice(Map<String, int> juiceCounts) async {
     final pdf = pw.Document();
+    final textColor = PdfColor.fromHex('#352300');
 
     final Uint8List logoBytes = await rootBundle
         .load(ImageManager.akadomenLogo)
@@ -55,44 +59,50 @@ class InvoiceCubit extends Cubit<InvoiceState> {
       pw.Page(
         build: (pw.Context context) {
           return pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            crossAxisAlignment: pw.CrossAxisAlignment.center,
             children: [
               pw.Image(
                 pw.MemoryImage(logoBytes),
-                width: 150,
-                height: 150,
+                width: 200,
+                height: 200,
               ),
               pw.Text('City Road - empty',
-                  style: const pw.TextStyle(fontSize: 14)),
-              pw.Text('Phone: empty', style: const pw.TextStyle(fontSize: 14)),
-              pw.Text('Tax Number: empty',
-                  style: const pw.TextStyle(fontSize: 14)),
-              pw.SizedBox(height: 10),
+                  style: pw.TextStyle(fontSize: 14, color: textColor)),
+              pw.Text('Phone: 01061172139',
+                  style: pw.TextStyle(fontSize: 14, color: textColor)),
+              pw.Text('Tax Number: 000002',
+                  style: pw.TextStyle(fontSize: 14, color: textColor)),
+              pw.SizedBox(height: 5.h),
               pw.BarcodeWidget(
+                color: textColor,
                 barcode: pw.Barcode.code128(),
-                data: '000002',
-                width: 200,
-                height: 80,
+                data: '000000000000002',
+                width: 100.w,
+                height: 60,
               ),
-              pw.SizedBox(height: 10),
-              pw.Text('Invoice Number: empty',
+              pw.Text('Invoice Number: 15',
                   style: pw.TextStyle(
-                      fontSize: 18, fontWeight: pw.FontWeight.bold)),
-              pw.Text('Simple Sales Invoice',
-                  style: const pw.TextStyle(fontSize: 18)),
-              pw.SizedBox(height: 10),
-              pw.Text('Date: $formattedDate',
-                  style: const pw.TextStyle(fontSize: 14)),
-              pw.Text('Time: $formattedTime',
-                  style: const pw.TextStyle(fontSize: 14)),
-              pw.SizedBox(height: 10),
-              pw.Text('Customer Name: empty',
-                  style: const pw.TextStyle(fontSize: 14)),
-              pw.SizedBox(height: 10),
-              pw.SizedBox(height: 10),
+                      fontSize: 18,
+                      fontWeight: pw.FontWeight.bold,
+                      color: textColor)),
+              pw.SizedBox(height: 5.h),
+              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+                pw.Text('Date: $formattedDate',
+                    style: pw.TextStyle(fontSize: 14, color: textColor)),
+                pw.SizedBox(width: 5.h),
+                pw.Text('Time: $formattedTime',
+                    style: pw.TextStyle(fontSize: 14, color: textColor)),
+              ]),
+              pw.SizedBox(height: 5.h),
+              pw.Text('Customer Name: mahmoud',
+                  style: pw.TextStyle(
+                      fontSize: 18,
+                      fontWeight: pw.FontWeight.bold,
+                      color: textColor)),
+              pw.SizedBox(height: 5.h),
               pw.Table.fromTextArray(
                 context: context,
-                border: pw.TableBorder.all(),
+                border: pw.TableBorder.all(color: textColor),
                 headers: <String>[
                   'Item',
                   'Price (EGP)',
@@ -101,9 +111,11 @@ class InvoiceCubit extends Cubit<InvoiceState> {
                   'Total (EGP)',
                   'Quantity'
                 ],
+                cellStyle: pw.TextStyle(color: textColor),
+                headerStyle: pw.TextStyle(color: textColor),
                 data: data,
               ),
-              pw.SizedBox(height: 10),
+              pw.SizedBox(height: 5.h),
               pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.end,
                 children: [
@@ -112,13 +124,15 @@ class InvoiceCubit extends Cubit<InvoiceState> {
                     children: [
                       pw.Text(
                           'Total Amount: ${totalAmount.toStringAsFixed(2)} EGP',
-                          style: const pw.TextStyle(fontSize: 14)),
+                          style: pw.TextStyle(fontSize: 14, color: textColor)),
                       pw.Text('Tax: ${tax.toStringAsFixed(2)} EGP',
-                          style: const pw.TextStyle(fontSize: 14)),
+                          style: pw.TextStyle(fontSize: 14, color: textColor)),
                       pw.Text(
                           'Grand Total: ${grandTotal.toStringAsFixed(2)} EGP',
                           style: pw.TextStyle(
-                              fontSize: 14, fontWeight: pw.FontWeight.bold)),
+                              fontSize: 14,
+                              fontWeight: pw.FontWeight.bold,
+                              color: textColor)),
                     ],
                   ),
                 ],
@@ -133,6 +147,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
     return pdf;
   }
 }
+
     // await Printing.layoutPdf(
     //   onLayout: (PdfPageFormat format) async => pdf.save(),
     // );
