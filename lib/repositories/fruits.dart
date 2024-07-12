@@ -13,7 +13,7 @@ class FruitsRepository {
     JuiceModel(name: 'Lemon', price: 50, image: ImageManager.lemon),
     JuiceModel(name: 'mango', price: 55, image: ImageManager.mango),
     JuiceModel(name: 'orange', price: 60, image: ImageManager.orange),
-    JuiceModel(name: 'pineapple', price: 75, image: ImageManager.pineapple),
+    JuiceModel(name: 'pineapple', price: 75, image: ImageManager.pineapple),  
     JuiceModel(name: 'pomegranate', price: 85, image: ImageManager.pomegranate),
     JuiceModel(name: 'strawberry', price: 55, image: ImageManager.strawberry),
     JuiceModel(name: 'watermelon', price: 70, image: ImageManager.watermelon),
