@@ -21,6 +21,7 @@ class MyTextFormField extends StatefulWidget {
     this.isVisibleColor,
     this.obscureText,
     this.initialValue,
+    this.height,
   });
   final String? hintText;
   final String? label;
@@ -36,6 +37,7 @@ class MyTextFormField extends StatefulWidget {
   final Color? isVisibleColor;
   final bool? obscureText;
   final String? initialValue;
+  final double? height;
   @override
   State<MyTextFormField> createState() => _MyTextFormFieldState();
 }
@@ -47,11 +49,15 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
     return Column(children: [
       Container(
         alignment: AlignmentDirectional.centerStart,
-        padding: EdgeInsets.only(top: 12.h, bottom: 5.h),
-        child: Text(
-          widget.title ?? "",
-          style: context.textTheme.bodySmall?.copyWith(fontSize: 14.spMin),
-        ),
+        padding: EdgeInsets.only(
+            top: widget.height ?? 12.h, bottom: widget.height ?? 5.h),
+        child: widget.title != null
+            ? Text(
+                widget.title!,
+                style:
+                    context.textTheme.bodySmall?.copyWith(fontSize: 14.spMin),
+              )
+            : null,
       ),
       TextFormField(
         initialValue: widget.initialValue,
@@ -64,7 +70,9 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
         validator: widget.validator ??
             (value) {
               if (value!.isEmpty) {
-                return "${widget.title} cannot be empty";
+                return widget.title?.isNotEmpty ?? false
+                    ? "${widget.title} cannot be empty"
+                    : "Field cannot be empty";
               } else {
                 return null;
               }

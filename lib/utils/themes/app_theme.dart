@@ -33,7 +33,7 @@ abstract class AppTheme {
               fontWeight: FontWeight.w500),
           overlayColor: ColorManager.error,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40),
+            borderRadius: BorderRadius.circular(25),
           ),
           backgroundColor: ColorManager.brown,
           fixedSize: Size(double.maxFinite, 54.h),

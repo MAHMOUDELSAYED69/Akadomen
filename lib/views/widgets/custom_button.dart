@@ -25,7 +25,7 @@ class MyElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: context.elevatedButtonTheme.style?.copyWith(
-          fixedSize: WidgetStatePropertyAll(size ?? Size(context.width, 45.h)),
+          fixedSize: WidgetStatePropertyAll(size ?? Size(context.width, 40.h)),
         ),
         onPressed: isDisabled == true ? null : onPressed,
         child: widget ??

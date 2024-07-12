@@ -27,7 +27,7 @@ abstract class AppRouter {
               create: (context) => InvoiceCubit(),
             ),
             BlocProvider(
-              create: (context) => CounterCubit(),
+              create: (context) => CalcCubit(),
             ),
           ],
           child: const HomeScreen(),
