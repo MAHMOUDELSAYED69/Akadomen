@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:akadomen/models/juice.dart';
 
-class CalcCubit extends Cubit<Map<JuiceModel, int>> {
-  CalcCubit() : super({});
+class CalculatorCubit extends Cubit<Map<JuiceModel, int>> {
+  CalculatorCubit() : super({});
 
   void increment(JuiceModel juice) {
     final currentCount = state[juice] ?? 0;

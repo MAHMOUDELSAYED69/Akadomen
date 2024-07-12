@@ -31,7 +31,8 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double fontSize = 3.sp;
+    final calculator = context.read<CalculatorCubit>();
+    final invoice = context.read<InvoiceCubit>();
     return Container(
       margin: EdgeInsets.only(right: context.width / 30),
       padding: const EdgeInsets.all(20),
@@ -50,196 +51,158 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
         ],
       ),
       child: SingleChildScrollView(
-        child: Expanded(
-          child: Column(
-            children: [
-              SizedBox(height: 10.h),
-              Image.asset(
-                ImageManager.akadomenLogo,
-                height: 150,
-              ),
-              SizedBox(height: 10.h),
-              BlocBuilder<CalcCubit, Map<JuiceModel, int>>(
-                builder: (context, juiceCounts) {
-                  final filteredJuiceCounts = juiceCounts.entries
-                      .where((entry) => entry.value > 0)
-                      .toList();
-                  return Form(
-                    key: _formkey,
-                    child: Column(
-                      children: [
-                        Table(
-                          border: TableBorder.all(),
+        child: Column(
+          children: [
+            SizedBox(height: 10.h),
+            Image.asset(
+              ImageManager.akadomenLogo,
+              height: 150,
+            ),
+            SizedBox(height: 10.h),
+            BlocBuilder<CalculatorCubit, Map<JuiceModel, int>>(
+              builder: (context, juiceCounts) {
+                final filteredJuiceCounts = juiceCounts.entries
+                    .where((entry) => entry.value > 0)
+                    .toList();
+                return Form(
+                  key: _formkey,
+                  child: Column(
+                    children: [
+                      Table(
+                        border: TableBorder.all(),
+                        children: [
+                          TableRow(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: _invoiceText('Item'),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: _invoiceText('Quantity'),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: _invoiceText('Price'),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: _invoiceText('Total'),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      // Table rows
+                      ...filteredJuiceCounts.map((entry) {
+                        final juice = entry.key;
+                        final quantity = entry.value;
+                        final totalPrice = juice.price * quantity;
+                        return Table(
+                          border: const TableBorder(
+                              bottom: BorderSide(),
+                              left: BorderSide(),
+                              right: BorderSide(),
+                              verticalInside: BorderSide()),
                           children: [
                             TableRow(
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Item',
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.bodySmall
-                                        ?.copyWith(fontSize: fontSize),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                                  child: _invoiceText(juice.name),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Quantity',
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.bodySmall
-                                        ?.copyWith(fontSize: fontSize),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                                  child: _invoiceText(quantity.toString()),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Price',
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.bodySmall
-                                        ?.copyWith(fontSize: fontSize),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                                  child: _invoiceText(
+                                      juice.price.toStringAsFixed(2)),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Total',
-                                    textAlign: TextAlign.center,
-                                    style: context.textTheme.bodySmall
-                                        ?.copyWith(fontSize: fontSize),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                  child: _invoiceText(
+                                    totalPrice.toStringAsFixed(2),
                                   ),
                                 ),
                               ],
                             ),
                           ],
+                        );
+                      }),
+                      SizedBox(height: 5.h),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: _invoiceText(
+                          'Total Amount: ${calculator.getTotalPrice().toStringAsFixed(2)} EGP',
                         ),
-                        // Table rows
-                        ...filteredJuiceCounts.map((entry) {
-                          final juice = entry.key;
-                          final quantity = entry.value;
-                          final totalPrice = juice.price * quantity;
-                          return Table(
-                            border: const TableBorder(
-                                bottom: BorderSide(),
-                                left: BorderSide(),
-                                right: BorderSide(),
-                                verticalInside: BorderSide()),
-                            children: [
-                              TableRow(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      juice.name,
-                                      style: context.textTheme.bodySmall
-                                          ?.copyWith(fontSize: fontSize),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      quantity.toString(),
-                                      style: context.textTheme.bodySmall
-                                          ?.copyWith(fontSize: fontSize),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      juice.price.toStringAsFixed(2),
-                                      style: context.textTheme.bodySmall
-                                          ?.copyWith(fontSize: fontSize),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      totalPrice.toStringAsFixed(2),
-                                      style: context.textTheme.bodySmall
-                                          ?.copyWith(fontSize: fontSize),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        }),
-                        SizedBox(height: 5.h),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            'Total Amount: ${context.read<CalcCubit>().getTotalPrice().toStringAsFixed(2)} EGP',
-                            style: context.textTheme.displayMedium
-                                ?.copyWith(fontSize: fontSize),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                      ),
+                      if (calculator.getTotalPrice() == 0.0)
+                        SizedBox(
+                          height: context.height / 3,
+                          child: const Padding(
+                            padding: EdgeInsets.only(top: 8.0),
+                            child: Placeholder(
+                              strokeWidth: 1,
+                              color: ColorManager.brown,
+                            ),
                           ),
                         ),
-                        MyTextFormField(
-                          hintText: 'Customer Name',
-                          onSaved: (data) => _customerName = data,
-                        ),
-                        SizedBox(height: 10.h),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: MyElevatedButton(
-                                title: 'Get Invoice',
-                                onPressed: () {
-                                  if (_formkey.currentState?.validate() ??
-                                      false) {
-                                    _formkey.currentState?.save();
-                                    context
-                                        .read<InvoiceCubit>()
-                                        .generateInvoice(
-                                          juiceCounts: juiceCounts,
-                                          customerName: _customerName!,
-                                        );
-                                    context.read<CalcCubit>().reset();
-                                    _formkey.currentState?.reset();
-                                  }
-                                },
-                              ),
+                      MyTextFormField(
+                        hintText: 'Customer Name',
+                        onSaved: (data) => _customerName = data,
+                      ),
+                      SizedBox(height: 10.h),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: MyElevatedButton(
+                              title: 'Get Invoice',
+                              onPressed: () {
+                                if (_formkey.currentState?.validate() ??
+                                    false) {
+                                  _formkey.currentState?.save();
+                                  invoice.generateInvoice(
+                                    juiceCounts: juiceCounts,
+                                    customerName: _customerName!,
+                                  );
+                                  calculator.reset();
+                                  _formkey.currentState?.reset();
+                                }
+                              },
                             ),
-                            IconButton(
-                              onPressed: () =>
-                                  context.read<CalcCubit>().reset(),
-                              icon: const Icon(
-                                Icons.refresh,
-                                color: ColorManager.brown,
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              calculator.reset();
+                              _formkey.currentState?.reset();
+                            },
+                            icon: const Icon(
+                              Icons.refresh,
+                              color: ColorManager.brown,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  Text _invoiceText(String data) {
+    return Text(
+      data,
+      style: context.textTheme.displayMedium?.copyWith(fontSize: 3.sp),
+      textAlign: TextAlign.center,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }

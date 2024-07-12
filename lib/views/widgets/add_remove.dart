@@ -14,7 +14,7 @@ class AddAndRemoveCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const white = ColorManager.white;
-    const black = ColorManager.black;
+    const brown = ColorManager.brown;
     return Positioned(
       bottom: 10,
       right: 10,
@@ -31,7 +31,7 @@ class AddAndRemoveCard extends StatelessWidget {
               splashColor: white,
               backgroundColor: white.withOpacity(0.7),
               onPressed: onIncrement,
-              child: Icon(Icons.add, color: black, size: 7.sp),
+              child: Icon(Icons.add, color: brown, size: 7.sp),
             ),
           ),
           SizedBox(
@@ -43,7 +43,7 @@ class AddAndRemoveCard extends StatelessWidget {
               splashColor: white,
               backgroundColor: white.withOpacity(0.7),
               onPressed: onDecrement,
-              child: Icon(Icons.remove, color: black, size: 7.sp),
+              child: Icon(Icons.remove, color: brown, size: 7.sp),
             ),
           ),
         ],
