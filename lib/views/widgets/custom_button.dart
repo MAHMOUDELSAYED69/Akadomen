@@ -2,7 +2,6 @@ import 'package:akadomen/utils/extentions/extentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class MyElevatedButton extends StatelessWidget {
   const MyElevatedButton({
     super.key,
@@ -25,7 +24,11 @@ class MyElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: context.elevatedButtonTheme.style?.copyWith(
-          fixedSize: WidgetStatePropertyAll(size ?? Size(context.width, 40.h)),
+          fixedSize: WidgetStatePropertyAll(
+            size ?? Size(context.width, 40.h),
+          ),
+          backgroundColor: WidgetStatePropertyAll(backgroundColor),
+          overlayColor: WidgetStatePropertyAll(backgroundColor),
         ),
         onPressed: isDisabled == true ? null : onPressed,
         child: widget ??
