@@ -6,17 +6,22 @@ import 'package:meta/meta.dart';
 import 'package:pdf/pdf.dart' show PdfColor;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:akadomen/repositories/fruits.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
+
+import '../../models/juice.dart';
 
 part 'invoice_state.dart';
 
 class InvoiceCubit extends Cubit<InvoiceState> {
   InvoiceCubit() : super(InvoiceInitial());
 
-  Future<pw.Document> generateInvoice(Map<String, int> juiceCounts) async {
+  Future<pw.Document> generateInvoice({
+    required Map<JuiceModel, int> juiceCounts,
+    required String customerName,
+    String? customerPhoneNumber,
+  }) async {
     final pdf = pw.Document();
     final textColor = PdfColor.fromHex('#352300');
 
@@ -24,28 +29,21 @@ class InvoiceCubit extends Cubit<InvoiceState> {
         .load(ImageManager.akadomenLogo)
         .then((value) => value.buffer.asUint8List());
 
-    final List<List<String>> data = juiceCounts.entries
-        .map((entry) {
-          if (entry.value > 0) {
-            final juice = FruitsRepository.juiceList
-                .firstWhere((j) => j.name == entry.key);
-            final price = juice.price;
-            final quantity = entry.value;
-            final total = price * quantity;
-            return [
-              juice.name,
-              price.toStringAsFixed(2),
-              '0.00',
-              '0.00',
-              total.toStringAsFixed(2),
-              quantity.toString()
-            ];
-          } else {
-            return <String>[];
-          }
-        })
-        .where((element) => element.isNotEmpty)
-        .toList();
+    final List<List<String>> data = juiceCounts.entries.map((entry) {
+      final juice = entry.key;
+      final price = juice.price;
+      final quantity = entry.value;
+      final total = price * quantity;
+      return [
+        juice.name,
+        price.toStringAsFixed(2),
+        '0.00',
+        '0.00',
+        total.toStringAsFixed(2),
+        quantity.toString()
+      ];
+    }).toList();
+
     final totalAmount =
         data.fold<double>(0, (sum, item) => sum + double.parse(item[4]));
     const tax = 0.00;
@@ -66,6 +64,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
                 width: 200,
                 height: 200,
               ),
+              pw.SizedBox(height: 5.h),
               pw.Text('City Road - empty',
                   style: pw.TextStyle(fontSize: 14, color: textColor)),
               pw.Text('Phone: 01061172139',
@@ -94,7 +93,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
                     style: pw.TextStyle(fontSize: 14, color: textColor)),
               ]),
               pw.SizedBox(height: 5.h),
-              pw.Text('Customer Name: mahmoud',
+              pw.Text('Customer Name: $customerName',
                   style: pw.TextStyle(
                       fontSize: 18,
                       fontWeight: pw.FontWeight.bold,

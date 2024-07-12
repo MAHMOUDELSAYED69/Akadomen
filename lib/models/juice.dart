@@ -2,13 +2,13 @@ class JuiceModel {
   final int? id;
   final String name;
   final int price;
-  final String image;
+  final String? image;
 
   JuiceModel({
     this.id,
     required this.name,
     required this.price,
-    required this.image,
+    this.image,
   });
 
   Map<String, dynamic> toMap() {
