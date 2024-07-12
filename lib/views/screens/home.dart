@@ -1,5 +1,6 @@
 import 'package:akadomen/repositories/fruits.dart';
 import 'package:akadomen/utils/constants/colors.dart';
+import 'package:akadomen/utils/constants/routes.dart';
 import 'package:akadomen/utils/extentions/extentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,9 +91,13 @@ class HomeScreen extends StatelessWidget {
               left: 5,
               top: 5,
               child: IconButton(
-                hoverColor: ColorManager.white,
-                style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(ColorManager.white.withOpacity(0.7))),
-                  onPressed: () {},
+                  hoverColor: ColorManager.white,
+                  style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                          ColorManager.white.withOpacity(0.7))),
+                  onPressed: () => Navigator.pushNamed(
+                        context,RouteManager.settings
+                      ),
                   icon: Icon(
                     size: 7.sp,
                     Icons.settings,

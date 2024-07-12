@@ -1,13 +1,15 @@
+
 import 'package:akadomen/router/page_transition.dart';
-import 'package:akadomen/views/screens/home.dart';
-import 'package:akadomen/views/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../controllers/calc/calccubit_cubit.dart';
 import '../controllers/invoice/invoice_cubit.dart';
 import '../utils/constants/routes.dart';
+import '../views/screens/home.dart';
 import '../views/screens/login.dart';
+import '../views/screens/register.dart';
 import '../views/screens/splash.dart';
+import '../views/screens/settings.dart';
 
 abstract class AppRouter {
   const AppRouter._();
@@ -32,6 +34,9 @@ abstract class AppRouter {
           ],
           child: const HomeScreen(),
         ));
+      case RouteManager.settings:
+        return PageTransitionManager.materialSlideTransition(
+            const SettingsScreen());
       default:
         return null;
     }
