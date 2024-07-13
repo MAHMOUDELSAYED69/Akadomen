@@ -1,9 +1,11 @@
-
+import 'package:akadomen/controllers/login/login_cubit.dart';
 import 'package:akadomen/router/page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../controllers/calc/calccubit_cubit.dart';
 import '../controllers/invoice/invoice_cubit.dart';
+import '../controllers/logout/logout_cubit.dart';
+import '../controllers/register/register_cubit.dart';
 import '../utils/constants/routes.dart';
 import '../views/screens/home.dart';
 import '../views/screens/login.dart';
@@ -16,12 +18,20 @@ abstract class AppRouter {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteManager.initialRoute:
-        return PageTransitionManager.fadeTransition(const SplashScreen());
+        return PageTransitionManager.fadeTransition(BlocProvider(
+          create: (context) => AuthStatus(),
+          child: const SplashScreen(),
+        ));
       case RouteManager.login:
-        return PageTransitionManager.fadeTransition(const LoginScreen());
+        return PageTransitionManager.fadeTransition(BlocProvider(
+          create: (context) => LoginCubit(),
+          child: const LoginScreen(),
+        ));
       case RouteManager.register:
-        return PageTransitionManager.materialSlideTransition(
-            const RegisterScreen());
+        return PageTransitionManager.materialSlideTransition(BlocProvider(
+          create: (context) => RegisterCubit(),
+          child: const RegisterScreen(),
+        ));
       case RouteManager.home:
         return PageTransitionManager.materialSlideTransition(MultiBlocProvider(
           providers: [
@@ -35,8 +45,10 @@ abstract class AppRouter {
           child: const HomeScreen(),
         ));
       case RouteManager.settings:
-        return PageTransitionManager.materialSlideTransition(
-            const SettingsScreen());
+        return PageTransitionManager.materialSlideTransition(BlocProvider(
+          create: (context) => LoginCubit(),
+          child: const SettingsScreen(),
+        ));
       default:
         return null;
     }
