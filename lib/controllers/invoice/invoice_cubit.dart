@@ -1,8 +1,8 @@
 import 'package:akadomen/utils/constants/images.dart';
+import 'package:akadomen/utils/helpers/shared_pref.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:meta/meta.dart';
 import 'package:pdf/pdf.dart' show PdfColor;
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -10,12 +10,14 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
 
+import '../../database/sql.dart';
 import '../../models/juice.dart';
 
 part 'invoice_state.dart';
 
 class InvoiceCubit extends Cubit<InvoiceState> {
   InvoiceCubit() : super(InvoiceInitial());
+  final SqlDb _sqlDb = SqlDb();
 
   Future<pw.Document> generateInvoice({
     required Map<JuiceModel, int> juiceCounts,
@@ -53,6 +55,14 @@ class InvoiceCubit extends Cubit<InvoiceState> {
     final formattedDate = DateFormat('yyyy-MM-dd').format(now);
     final formattedTime = DateFormat('HH:mm:ss').format(now);
 
+    // Get the next invoice number for the user
+    final invoiceNumber = await _sqlDb.getNextInvoiceNumber(CacheData.getData(key: 'currentUser'));
+
+    if (invoiceNumber == null) {
+      debugPrint('Error: Invoice number is null');
+      return pdf;
+    }
+
     pdf.addPage(
       pw.Page(
         build: (pw.Context context) {
@@ -79,7 +89,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
                 width: 100.w,
                 height: 60,
               ),
-              pw.Text('Invoice Number: 15',
+              pw.Text('Invoice Number: $invoiceNumber',
                   style: pw.TextStyle(
                       fontSize: 18,
                       fontWeight: pw.FontWeight.bold,
@@ -146,7 +156,6 @@ class InvoiceCubit extends Cubit<InvoiceState> {
     return pdf;
   }
 }
-
     // await Printing.layoutPdf(
     //   onLayout: (PdfPageFormat format) async => pdf.save(),
     // );
