@@ -1,5 +1,5 @@
-import 'dart:developer';
 
+import 'package:akadomen/controllers/login/login_cubit.dart';
 import 'package:akadomen/utils/constants/colors.dart';
 import 'package:akadomen/utils/constants/images.dart';
 import 'package:akadomen/utils/constants/routes.dart';
@@ -7,7 +7,10 @@ import 'package:akadomen/utils/extentions/extentions.dart';
 import 'package:akadomen/views/widgets/custom_button.dart';
 import 'package:akadomen/views/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../utils/helpers/my_snackbar.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,8 +33,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void _login() {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
-      log('$_username && $_password');
-      Navigator.pushReplacementNamed(context, RouteManager.home);
+      context
+          .read<LoginCubit>()
+          .login(username: _username!.trim(), password: _password!.trim());
+      _formKey.currentState?.reset();
     }
   }
 
@@ -73,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       direction: Axis.horizontal,
                       children: [
                         Text(
-                          'Don’t have an ccount?  ',
+                          'Don’t have an ccount? ',
                           style: context.textTheme.displayMedium,
                         ),
                         GestureDetector(
@@ -105,9 +110,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       onSaved: (data) => _password = data,
                     ),
                     SizedBox(height: 40.h),
-                    MyElevatedButton(
-                      title: 'Log in',
-                      onPressed: _login,
+                    BlocListener<LoginCubit, LoginState>(
+                      listener: (context, state) {
+                        if (state is LoginSuccess) {
+                          customSnackBar(context, 'Login success!');
+                          Navigator.pushReplacementNamed(
+                              context, RouteManager.home);
+                        }
+                        if (state is LoginFailure) {
+                          customSnackBar(context, 'Login failed!');
+                        }
+                      },
+                      child: MyElevatedButton(
+                        title: 'Log in',
+                        onPressed: _login,
+                      ),
                     ),
                     SizedBox(height: 10.h),
                   ],

@@ -1,10 +1,12 @@
-import 'dart:developer';
-
 import 'package:akadomen/utils/extentions/extentions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../controllers/register/register_cubit.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/images.dart';
+import '../../utils/helpers/my_snackbar.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 
@@ -16,22 +18,27 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  @override
-  void initState() {
-    _formKey = GlobalKey<FormState>();
-    super.initState();
-  }
-
   late GlobalKey<FormState> _formKey;
+  late TextEditingController _passwordController;
 
   String? _username;
   String? _password;
   String? _confirmPassword;
+
+  @override
+  void initState() {
+    _formKey = GlobalKey<FormState>();
+    _passwordController = TextEditingController();
+    super.initState();
+  }
+
   void _register() {
     if (_formKey.currentState?.validate() ?? false) {
       _formKey.currentState?.save();
-      log('$_username && $_password && $_confirmPassword');
-      Navigator.pop(context);
+      context
+          .read<RegisterCubit>()
+          .register(_username!.trim(), _confirmPassword!.trim());
+      _formKey.currentState?.reset();
     }
   }
 
@@ -98,6 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onSaved: (data) => _username = data,
                     ),
                     MyTextFormField(
+                      controller: _passwordController,
                       title: 'Your password',
                       hintText: 'Enter your password',
                       obscureText: true,
@@ -108,11 +116,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hintText: 'Enter your password',
                       obscureText: true,
                       onSaved: (data) => _confirmPassword = data,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Field cannot be empty";
+                        }
+                        if (_passwordController.text != value) {
+                          return "Passwords do not match";
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(height: 40.h),
-                    MyElevatedButton(
-                      title: 'Register',
-                      onPressed: _register,
+                    BlocListener<RegisterCubit, RegisterState>(
+                      listener: (context, state) {
+                        if (state is RegisterSuccess) {
+                          customSnackBar(
+                              context, 'Registration success, Login now!');
+                          Navigator.pop(context);
+                        }
+                        if (state is RegisterFailure) {
+                          customSnackBar(context, 'Registration failed!');
+                        }
+                        if (state is UsernameTaken) {
+                          customSnackBar(context, 'Username already taken!');
+                        }
+                      },
+                      child: MyElevatedButton(
+                        title: 'Register',
+                        onPressed: _register,
+                      ),
                     ),
                     SizedBox(height: 10.h),
                   ],

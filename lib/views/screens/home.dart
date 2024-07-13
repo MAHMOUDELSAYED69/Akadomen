@@ -94,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                   hoverColor: ColorManager.white,
                   style: ButtonStyle(
                       backgroundColor: WidgetStatePropertyAll(
-                          ColorManager.white.withOpacity(0.7))),
+                          ColorManager.white.withOpacity(0.7),),),
                   onPressed: () => Navigator.pushNamed(
                         context,RouteManager.settings
                       ),
