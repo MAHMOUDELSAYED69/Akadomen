@@ -3,15 +3,20 @@ import 'dart:io';
 
 import 'package:akadomen/router/app_router.dart';
 import 'package:akadomen/utils/constants/routes.dart';
+import 'package:akadomen/utils/helpers/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:window_manager/window_manager.dart';
 
+import 'services/sql.dart';
 import 'utils/themes/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  CacheData.cacheDataInit();
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
   if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
     await windowManager.ensureInitialized();
 
@@ -30,7 +35,7 @@ Future<void> main() async {
       await windowManager.setMinimumSize(const Size(1024, 768));
     });
   }
-
+  await SqlDb().initializeDatabase();
   runApp(const MyApp());
 }
 
