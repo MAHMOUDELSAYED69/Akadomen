@@ -1,7 +1,11 @@
+import 'package:akadomen/controllers/login/login_cubit.dart';
+import 'package:akadomen/controllers/logout/logout_cubit.dart';
 import 'package:akadomen/utils/constants/routes.dart';
 import 'package:akadomen/utils/extentions/extentions.dart';
+import 'package:akadomen/utils/helpers/my_snackbar.dart';
 import 'package:akadomen/views/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../utils/constants/colors.dart';
@@ -29,14 +33,14 @@ class SettingsScreen extends StatelessWidget {
           ),
           Row(
             children: [
-            SizedBox(width: context.width/8.7),
+              SizedBox(width: context.width / 8.7),
               MyElevatedButton(
                 backgroundColor: ColorManager.white.withOpacity(0.7),
                 size: Size(context.width / 2, context.height / 2),
-                widget:  Icon(
+                widget: Icon(
                   Icons.add_a_photo_rounded,
-                   size: 20.sp,
-                   color: ColorManager.brown,
+                  size: 20.sp,
+                  color: ColorManager.brown,
                 ),
                 onPressed: () {},
               ),
@@ -85,15 +89,26 @@ class SettingsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         const Spacer(),
-                        MyElevatedButton(
-                          title: 'Logout',
-                          onPressed: () {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              RouteManager.login,
-                              (route) => false,
-                            );
+                        BlocListener<LoginCubit, LoginState>(
+                          listener: (context, state) {
+                            if (state is Logout) {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                RouteManager.login,
+                                (route) => false,
+                              );
+                              if (state is LogoutFailure) {
+                                customSnackBar(context,
+                                    'There was an error please try again later!');
+                              }
+                            }
                           },
+                          child: MyElevatedButton(
+                            title: 'Logout',
+                            onPressed: () {
+                              context.read<AuthStatus>().logout();
+                            },
+                          ),
                         )
                       ],
                     ))
