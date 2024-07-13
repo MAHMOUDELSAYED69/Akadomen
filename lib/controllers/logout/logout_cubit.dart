@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -11,7 +10,7 @@ class AuthStatus extends Cubit<AuthStatusState> {
 
   void checkLoginStatus() {
     try {
-      bool isUserLogin = CacheData.getData(key: 'isUserLogin');
+      bool isUserLogin = CacheData.getData(key: 'isUserLogin') ?? false;
       if (isUserLogin) {
         emit(Login());
       } else {
@@ -25,9 +24,12 @@ class AuthStatus extends Cubit<AuthStatusState> {
   Future<void> logout() async {
     try {
       await CacheData.setData(key: 'isUserLogin', value: false);
+      CacheData.deleteData(key: 'currentUser');
       emit(Logout());
     } catch (e) {
       emit(LogoutFailure());
     }
   }
+
+  deactivate() {}
 }

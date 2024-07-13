@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../services/sql.dart';
+import '../../database/sql.dart';
 
 part 'register_state.dart';
 

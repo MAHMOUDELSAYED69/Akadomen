@@ -1,9 +1,9 @@
-
 import 'package:akadomen/controllers/login/login_cubit.dart';
 import 'package:akadomen/utils/constants/colors.dart';
 import 'package:akadomen/utils/constants/images.dart';
 import 'package:akadomen/utils/constants/routes.dart';
 import 'package:akadomen/utils/extentions/extentions.dart';
+import 'package:akadomen/utils/helpers/shared_pref.dart';
 import 'package:akadomen/views/widgets/custom_button.dart';
 import 'package:akadomen/views/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,6 @@ class _LoginScreenState extends State<LoginScreen> {
       context
           .read<LoginCubit>()
           .login(username: _username!.trim(), password: _password!.trim());
-      _formKey.currentState?.reset();
     }
   }
 
@@ -114,6 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       listener: (context, state) {
                         if (state is LoginSuccess) {
                           customSnackBar(context, 'Login success!');
+
                           Navigator.pushReplacementNamed(
                               context, RouteManager.home);
                         }

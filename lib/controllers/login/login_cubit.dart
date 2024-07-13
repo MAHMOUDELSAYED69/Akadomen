@@ -2,7 +2,7 @@ import 'package:akadomen/utils/helpers/shared_pref.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../services/sql.dart';
+import '../../database/sql.dart';
 
 part 'login_state.dart';
 
@@ -15,8 +15,8 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       final user = await _sqlDb.getUser(username, password);
       if (user != null) {
-        // await _sqlDb.updateLoginStatus(user['id'] as int, true);
         await CacheData.setData(key: 'isUserLogin', value: true);
+        await CacheData.setData(key: 'currentUser', value: username);
         emit(LoginSuccess());
       } else {
         emit(LoginFailure());

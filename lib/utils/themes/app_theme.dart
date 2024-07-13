@@ -94,7 +94,7 @@ abstract class AppTheme {
             Radius.circular(12),
           ),
           borderSide: BorderSide(
-            width: 1,
+            width: 1.4,
             color: ColorManager.brown,
           ),
         ),
@@ -103,8 +103,8 @@ abstract class AppTheme {
             Radius.circular(12),
           ),
           borderSide: BorderSide(
-            width: 1,
-            color: ColorManager.grey,
+            width: 1.4,
+            color: ColorManager.brown,
           ),
         ),
         errorBorder: const OutlineInputBorder(
@@ -125,7 +125,7 @@ abstract class AppTheme {
             color: ColorManager.error,
           ),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 10),
+        contentPadding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 10),
       ),
     );
   }
