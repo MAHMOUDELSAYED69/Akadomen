@@ -1,8 +1,14 @@
-import 'package:akadomen/utils/constants/images.dart';
-
+import '../database/sql.dart';
 import '../models/juice.dart';
+import '../utils/constants/images.dart';
 
 class FruitsRepository {
+  FruitsRepository._privateConstructor();
+  static final FruitsRepository instance =
+      FruitsRepository._privateConstructor();
+
+  final SqlDb _sqlDb = SqlDb();
+
   static List<JuiceModel> juiceList = [
     JuiceModel(name: 'Apple', price: 70, image: ImageManager.apple),
     JuiceModel(name: 'Banana', price: 50, image: ImageManager.banana),
@@ -11,11 +17,44 @@ class FruitsRepository {
         name: 'Dragon fruit', price: 100, image: ImageManager.dragonFruit),
     JuiceModel(name: 'Kiwi', price: 80, image: ImageManager.kiwi),
     JuiceModel(name: 'Lemon', price: 50, image: ImageManager.lemon),
-    JuiceModel(name: 'mango', price: 55, image: ImageManager.mango),
-    JuiceModel(name: 'orange', price: 60, image: ImageManager.orange),
-    JuiceModel(name: 'pineapple', price: 75, image: ImageManager.pineapple),  
-    JuiceModel(name: 'pomegranate', price: 85, image: ImageManager.pomegranate),
-    JuiceModel(name: 'strawberry', price: 55, image: ImageManager.strawberry),
-    JuiceModel(name: 'watermelon', price: 70, image: ImageManager.watermelon),
+    JuiceModel(name: 'Mango', price: 55, image: ImageManager.mango),
+    JuiceModel(name: 'Orange', price: 60, image: ImageManager.orange),
+    JuiceModel(name: 'Pineapple', price: 75, image: ImageManager.pineapple),
+    JuiceModel(name: 'Pomegranate', price: 85, image: ImageManager.pomegranate),
+    JuiceModel(name: 'Strawberry', price: 55, image: ImageManager.strawberry),
+    JuiceModel(name: 'Watermelon', price: 70, image: ImageManager.watermelon),
   ];
+
+  Future<List<JuiceModel>> getUserJuices(String username) async {
+    final data = await _sqlDb.readData(
+        data: 'SELECT * FROM juices WHERE username = "$username"');
+    List<JuiceModel> userJuices = data
+            ?.map((item) => JuiceModel(
+                  name: item['name'] as String,
+                  price: item['price'] as int,
+                  image: item['image'] as String,
+                ))
+            .toList() ??
+        [];
+
+    List<JuiceModel> mergedList = [...juiceList];
+    mergedList.addAll(userJuices);
+
+    return mergedList;
+  }
+
+  Future<void> addUserJuice(String username, JuiceModel juice) async {
+    final data = '''
+      INSERT INTO juices (name, price, image, username)
+      VALUES ('${juice.name}', ${juice.price}, '${juice.image}', "$username")
+    ''';
+    await _sqlDb.insertData(data: data);
+  }
+
+  Future<void> removeUserJuice(String username, String juiceName) async {
+    final data = '''
+      DELETE FROM juices WHERE username = "$username" AND name = '$juiceName'
+    ''';
+    await _sqlDb.deleteData(data: data);
+  }
 }
