@@ -31,6 +31,8 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
 
   @override
   Widget build(BuildContext context) {
+    const border = BorderSide(width: 1, color: ColorManager.brown);
+
     final calculator = context.read<CalculatorCubit>();
     final invoice = context.read<InvoiceCubit>();
     return Container(
@@ -74,22 +76,10 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
                           children: [
                             TableRow(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: _invoiceText('Item'),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: _invoiceText('Quantity'),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: _invoiceText('Price'),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: _invoiceText('Total'),
-                                ),
+                                _invoiceText('Item'),
+                                _invoiceText('Quantity'),
+                                _invoiceText('Price'),
+                                _invoiceText('Total'),
                               ],
                             ),
                           ],
@@ -101,31 +91,19 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
                           final totalPrice = juice.price * quantity;
                           return Table(
                             border: const TableBorder(
-                                bottom: BorderSide(),
-                                left: BorderSide(),
-                                right: BorderSide(),
-                                verticalInside: BorderSide()),
+                              bottom: border,
+                              left: border,
+                              right: border,
+                              verticalInside: border,
+                            ),
                             children: [
                               TableRow(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: _invoiceText(juice.name),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: _invoiceText(quantity.toString()),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: _invoiceText(
-                                        juice.price.toStringAsFixed(2)),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: _invoiceText(
-                                      totalPrice.toStringAsFixed(2),
-                                    ),
+                                  _invoiceText(juice.name),
+                                  _invoiceText(quantity.toString()),
+                                  _invoiceText(juice.price.toStringAsFixed(2)),
+                                  _invoiceText(
+                                    totalPrice.toStringAsFixed(2),
                                   ),
                                 ],
                               ),
@@ -198,13 +176,16 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
     );
   }
 
-  Text _invoiceText(String data) {
-    return Text(
-      data,
-      style: context.textTheme.displayMedium?.copyWith(fontSize: 3.sp),
-      textAlign: TextAlign.center,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
+  Widget _invoiceText(String data) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        data,
+        style: context.textTheme.displayMedium?.copyWith(fontSize: 3.sp),
+        textAlign: TextAlign.center,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
     );
   }
 }

@@ -117,7 +117,7 @@ abstract class AppTheme {
             Radius.circular(12),
           ),
           borderSide: BorderSide(
-            width: 1,
+            width: 1.4,
             color: ColorManager.error,
           ),
         ),
@@ -126,7 +126,7 @@ abstract class AppTheme {
             Radius.circular(12),
           ),
           borderSide: BorderSide(
-            width: 1,
+            width: 1.4,
             color: ColorManager.error,
           ),
         ),

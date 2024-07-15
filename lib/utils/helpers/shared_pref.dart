@@ -72,8 +72,8 @@ class CacheData {
     await sharedpref.remove(key);
   }
 
-  static Future<bool> clearData({required bool clearData}) async {
-    if (clearData == true) {
+  static Future<bool> clearData({required bool sure}) async {
+    if (sure == true) {
       await sharedpref.clear();
     }
     return false;

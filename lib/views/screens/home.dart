@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../controllers/calc/calccubit_cubit.dart';
-import '../../controllers/repo/fruits_repository.dart';
+import '../../controllers/repository/fruits_repository.dart';
 import '../../models/juice.dart';
 import '../../utils/constants/images.dart';
 import '../widgets/add_remove.dart';
