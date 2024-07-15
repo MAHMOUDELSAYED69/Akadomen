@@ -1,4 +1,5 @@
 import '../database/sql.dart';
+import '../models/archive.dart';
 import '../models/juice.dart';
 import '../utils/constants/images.dart';
 
@@ -64,5 +65,30 @@ class FruitsRepository {
       UPDATE juices SET price = $newPrice WHERE username = "$username" AND name = '$juiceName'
     ''';
     await _sqlDb.updateData(data: data);
+  }
+
+  Future<List<ArchiveModel>?> getInvoices(String username) async {
+    final data = '''
+    SELECT * FROM invoices WHERE username = "$username"
+    ''';
+    final List<Map<String, Object?>>? result =
+        await _sqlDb.readData(data: data);
+    return result?.map((e) => ArchiveModel.fromMap(e)).toList();
+  }
+
+  Future<void> saveInvoice({
+    required int invoiceNumber,
+    required String customerName,
+    required String formattedDate,
+    required String formattedTime,
+    required double totalAmount,
+    required String items,
+    required String userName,
+  }) async {
+    final data = '''
+    INSERT INTO invoices (invoice_number, customer_name, date, time, total_amount, items, username)
+    VALUES ("$invoiceNumber", "$customerName", "$formattedDate", "$formattedTime", $totalAmount, "$items", "$userName")
+    ''';
+    await _sqlDb.insertData(data: data);
   }
 }
