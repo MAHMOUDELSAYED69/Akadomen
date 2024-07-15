@@ -110,7 +110,7 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
                             ],
                           );
                         }),
-                        SizedBox(height: 5.h),
+                        SizedBox(height: 3.h),
                         Align(
                           alignment: Alignment.centerRight,
                           child: _invoiceText(
@@ -120,9 +120,9 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
                         if (calculator.getTotalPrice() == 0.0)
                           SizedBox(
                             height: context.height / 3,
-                            child: const Padding(
-                              padding: EdgeInsets.only(top: 8.0),
-                              child: Placeholder(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 3.h),
+                              child: const Placeholder(
                                 strokeWidth: 1,
                                 color: ColorManager.brown,
                               ),
@@ -157,10 +157,8 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
                                 calculator.reset();
                                 _formkey.currentState?.reset();
                               },
-                              icon: const Icon(
-                                Icons.refresh,
-                                color: ColorManager.brown,
-                              ),
+                              hoverColor: ColorManager.grey.withOpacity(0.2),
+                              icon: const Icon(Icons.refresh),
                             )
                           ],
                         ),

@@ -65,11 +65,11 @@ abstract class AppTheme {
       ),
       textTheme: TextTheme(
         bodyLarge: TextStyle(
-            fontSize: 22.spMin,
+            fontSize: 5.sp,
             color: ColorManager.brown,
             fontWeight: FontWeight.bold),
         bodyMedium: TextStyle(
-          fontSize: 16.spMin,
+          fontSize: 4.sp,
           fontWeight: FontWeight.w500,
           color: ColorManager.white,
         ),
@@ -82,7 +82,7 @@ abstract class AppTheme {
             color: ColorManager.white,
             fontWeight: FontWeight.w500),
         displayMedium: TextStyle(
-            fontSize: 16.spMin,
+            fontSize: 4.sp,
             color: ColorManager.brown,
             fontWeight: FontWeight.w500),
       ),
