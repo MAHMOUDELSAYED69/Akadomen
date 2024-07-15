@@ -57,4 +57,12 @@ class FruitsRepository {
     ''';
     await _sqlDb.deleteData(data: data);
   }
+
+  Future<void> updateJuicePrice(
+      String username, String juiceName, int newPrice) async {
+    final data = '''
+      UPDATE juices SET price = $newPrice WHERE username = "$username" AND name = '$juiceName'
+    ''';
+    await _sqlDb.updateData(data: data);
+  }
 }

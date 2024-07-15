@@ -14,17 +14,26 @@ class FruitsRepositoryCubit extends Cubit<List<JuiceModel>> {
     emit(juices);
   }
 
-  Future<void> addUserJuice(String name, int price, String image) async {
+  Future<void> addUserJuice(
+      {required String name, required int price, required String image}) async {
     final username = await _getUsername();
     final newJuice = JuiceModel(name: name, price: price, image: image);
     await FruitsRepository.instance.addUserJuice(username, newJuice);
-    loadUserJuices();
+    await loadUserJuices();
   }
 
-  Future<void> removeUserJuice(String juiceName) async {
+  Future<void> removeUserJuice({required String juiceName}) async {
     final username = await _getUsername();
     await FruitsRepository.instance.removeUserJuice(username, juiceName);
-    loadUserJuices();
+    await loadUserJuices();
+  }
+
+  Future<void> updateJuicePrice(
+      {required JuiceModel juice, required int newPrice}) async {
+    final username = await _getUsername();
+    await FruitsRepository.instance
+        .updateJuicePrice(username, juice.name, newPrice);
+    await loadUserJuices();
   }
 
   Future<String> _getUsername() async {
