@@ -1,5 +1,6 @@
 import 'package:akadomen/controllers/login/login_cubit.dart';
 import 'package:akadomen/router/page_transition.dart';
+import 'package:akadomen/views/screens/archive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../controllers/calc/calccubit_cubit.dart';
@@ -17,6 +18,9 @@ import '../views/screens/settings.dart';
 
 abstract class AppRouter {
   const AppRouter._();
+
+  static final fruitsRepositoryCubit = FruitsRepositoryCubit();
+
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteManager.initialRoute:
@@ -40,9 +44,7 @@ abstract class AppRouter {
             BlocProvider(
               create: (context) => InvoiceCubit(),
             ),
-            BlocProvider(
-              create: (context) => FruitsRepositoryCubit()..loadUserJuices(),
-            ),
+            BlocProvider.value(value: fruitsRepositoryCubit..loadUserJuices()),
             BlocProvider(
               create: (context) => CalculatorCubit(),
             ),
@@ -56,9 +58,7 @@ abstract class AppRouter {
               BlocProvider(
                 create: (context) => AuthStatus(),
               ),
-              BlocProvider(
-                create: (context) => FruitsRepositoryCubit(),
-              ),
+              BlocProvider.value(value: fruitsRepositoryCubit),
               BlocProvider(
                 create: (context) => PickImageCubit(),
               ),
@@ -66,6 +66,9 @@ abstract class AppRouter {
             child: const SettingsScreen(),
           ),
         );
+      case RouteManager.archive:
+        return PageTransitionManager.materialSlideTransition(
+            const ArchiveScreen());
       default:
         return null;
     }
