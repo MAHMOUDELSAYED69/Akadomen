@@ -7,6 +7,14 @@ abstract class AppTheme {
   //? LIGHT THEME
   static ThemeData get lightTheme {
     return ThemeData(
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          overlayColor: const WidgetStatePropertyAll(ColorManager.white),
+          backgroundColor: WidgetStatePropertyAll(
+            ColorManager.white.withOpacity(0.7),
+          ),
+        ),
+      ),
       switchTheme: const SwitchThemeData(
         trackOutlineColor: WidgetStatePropertyAll(ColorManager.black),
         thumbColor: WidgetStatePropertyAll(ColorManager.black),
@@ -39,7 +47,7 @@ abstract class AppTheme {
           fixedSize: Size(double.maxFinite, 54.h),
         ),
       ),
-      iconTheme: const IconThemeData(color: ColorManager.black),
+      iconTheme: IconThemeData(color: ColorManager.brown, size: 7.sp),
       fontFamily: 'Poppins',
       useMaterial3: true,
       brightness: Brightness.light,
@@ -82,10 +90,7 @@ abstract class AppTheme {
         isCollapsed: true,
         isDense: true,
         errorStyle: TextStyle(
-          fontSize: 12.spMin,
-          color: ColorManager.error,
-          height: 0.5
-        ),
+            fontSize: 12.spMin, color: ColorManager.error, height: 0.5),
         hintStyle: TextStyle(fontSize: 12.spMin, color: ColorManager.grey),
         fillColor: ColorManager.white,
         filled: true,

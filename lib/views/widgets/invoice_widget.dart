@@ -35,7 +35,6 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
     final invoice = context.read<InvoiceCubit>();
     return Container(
       margin: EdgeInsets.only(right: context.width / 30),
-      padding: const EdgeInsets.all(20),
       width: context.width / 4.5,
       height: context.height / 1.2,
       decoration: BoxDecoration(
@@ -51,146 +50,149 @@ class _InvoiceWidgetState extends State<InvoiceWidget> {
         ],
       ),
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 10.h),
-            Image.asset(
-              ImageManager.akadomenLogo,
-              height: 150,
-            ),
-            SizedBox(height: 10.h),
-            BlocBuilder<CalculatorCubit, Map<JuiceModel, int>>(
-              builder: (context, juiceCounts) {
-                final filteredJuiceCounts = juiceCounts.entries
-                    .where((entry) => entry.value > 0)
-                    .toList();
-                return Form(
-                  key: _formkey,
-                  child: Column(
-                    children: [
-                      Table(
-                        border: TableBorder.all(),
-                        children: [
-                          TableRow(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: _invoiceText('Item'),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: _invoiceText('Quantity'),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: _invoiceText('Price'),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: _invoiceText('Total'),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      // Table rows
-                      ...filteredJuiceCounts.map((entry) {
-                        final juice = entry.key;
-                        final quantity = entry.value;
-                        final totalPrice = juice.price * quantity;
-                        return Table(
-                          border: const TableBorder(
-                              bottom: BorderSide(),
-                              left: BorderSide(),
-                              right: BorderSide(),
-                              verticalInside: BorderSide()),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              SizedBox(height: 10.h),
+              Image.asset(
+                ImageManager.akadomenLogo,
+                height: 150,
+              ),
+              SizedBox(height: 10.h),
+              BlocBuilder<CalculatorCubit, Map<JuiceModel, int>>(
+                builder: (context, juiceCounts) {
+                  final filteredJuiceCounts = juiceCounts.entries
+                      .where((entry) => entry.value > 0)
+                      .toList();
+                  return Form(
+                    key: _formkey,
+                    child: Column(
+                      children: [
+                        Table(
+                          border: TableBorder.all(),
                           children: [
                             TableRow(
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: _invoiceText(juice.name),
+                                  child: _invoiceText('Item'),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: _invoiceText(quantity.toString()),
+                                  child: _invoiceText('Quantity'),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: _invoiceText(
-                                      juice.price.toStringAsFixed(2)),
+                                  child: _invoiceText('Price'),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: _invoiceText(
-                                    totalPrice.toStringAsFixed(2),
-                                  ),
+                                  child: _invoiceText('Total'),
                                 ),
                               ],
                             ),
                           ],
-                        );
-                      }),
-                      SizedBox(height: 5.h),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: _invoiceText(
-                          'Total Amount: ${calculator.getTotalPrice().toStringAsFixed(2)} EGP',
                         ),
-                      ),
-                      if (calculator.getTotalPrice() == 0.0)
-                        SizedBox(
-                          height: context.height / 3,
-                          child: const Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: Placeholder(
-                              strokeWidth: 1,
-                              color: ColorManager.brown,
-                            ),
+                        // Table rows
+                        ...filteredJuiceCounts.map((entry) {
+                          final juice = entry.key;
+                          final quantity = entry.value;
+                          final totalPrice = juice.price * quantity;
+                          return Table(
+                            border: const TableBorder(
+                                bottom: BorderSide(),
+                                left: BorderSide(),
+                                right: BorderSide(),
+                                verticalInside: BorderSide()),
+                            children: [
+                              TableRow(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: _invoiceText(juice.name),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: _invoiceText(quantity.toString()),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: _invoiceText(
+                                        juice.price.toStringAsFixed(2)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: _invoiceText(
+                                      totalPrice.toStringAsFixed(2),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        }),
+                        SizedBox(height: 5.h),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: _invoiceText(
+                            'Total Amount: ${calculator.getTotalPrice().toStringAsFixed(2)} EGP',
                           ),
                         ),
-                      MyTextFormField(
-                        hintText: 'Customer Name',
-                        onSaved: (data) => _customerName = data,
-                      ),
-                      SizedBox(height: 10.h),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: MyElevatedButton(
-                              title: 'Get Invoice',
+                        if (calculator.getTotalPrice() == 0.0)
+                          SizedBox(
+                            height: context.height / 3,
+                            child: const Padding(
+                              padding: EdgeInsets.only(top: 8.0),
+                              child: Placeholder(
+                                strokeWidth: 1,
+                                color: ColorManager.brown,
+                              ),
+                            ),
+                          ),
+                        MyTextFormField(
+                          hintText: 'Customer Name',
+                          onSaved: (data) => _customerName = data,
+                        ),
+                        SizedBox(height: 10.h),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: MyElevatedButton(
+                                title: 'Get Invoice',
+                                onPressed: () {
+                                  if (_formkey.currentState?.validate() ??
+                                      false) {
+                                    _formkey.currentState?.save();
+                                    invoice.generateInvoice(
+                                      juiceCounts: juiceCounts,
+                                      customerName: _customerName!,
+                                    );
+                                    calculator.reset();
+                                    _formkey.currentState?.reset();
+                                  }
+                                },
+                              ),
+                            ),
+                            IconButton(
                               onPressed: () {
-                                if (_formkey.currentState?.validate() ??
-                                    false) {
-                                  _formkey.currentState?.save();
-                                  invoice.generateInvoice(
-                                    juiceCounts: juiceCounts,
-                                    customerName: _customerName!,
-                                  );
-                                  calculator.reset();
-                                  _formkey.currentState?.reset();
-                                }
+                                calculator.reset();
+                                _formkey.currentState?.reset();
                               },
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              calculator.reset();
-                              _formkey.currentState?.reset();
-                            },
-                            icon: const Icon(
-                              Icons.refresh,
-                              color: ColorManager.brown,
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ],
+                              icon: const Icon(
+                                Icons.refresh,
+                                color: ColorManager.brown,
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

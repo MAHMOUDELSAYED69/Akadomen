@@ -46,7 +46,9 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
   bool isObscure = true;
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
       Container(
         alignment: AlignmentDirectional.centerStart,
         padding: EdgeInsets.only(

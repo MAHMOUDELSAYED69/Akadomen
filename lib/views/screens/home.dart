@@ -17,7 +17,6 @@ import '../widgets/item_card.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     final calculator = context.read<CalculatorCubit>();
