@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _audioPlayer() async {
     _player.play(
       volume: double.infinity,
-      UrlSource(AudiosManager.akadomenAduio),
+      UrlSource(AudiosManager.splashSound),
     );
   }
 

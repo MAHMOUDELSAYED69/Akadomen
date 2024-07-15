@@ -1,4 +1,5 @@
 abstract class AudiosManager {
   const AudiosManager._();
-  static const String akadomenAduio = 'assets/audios/akadomensound.mp3';
+  static const String splashSound = 'assets/audios/splash_sound.mp3';
+  static const String logoutSound = 'assets/audios/logout_sound.mp3';
 }
