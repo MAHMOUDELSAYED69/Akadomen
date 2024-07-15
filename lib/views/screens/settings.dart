@@ -1,21 +1,18 @@
-import 'dart:io';
-
+import 'dart:io' show File;
 import 'package:akadomen/utils/constants/routes.dart';
 import 'package:akadomen/utils/extentions/extentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../controllers/logout/logout_cubit.dart';
 import '../../controllers/image/image_cubit.dart';
 import '../../controllers/repo/fruits_repository.dart';
 import '../../models/juice.dart';
 import '../../utils/constants/colors.dart';
 import '../../utils/constants/images.dart';
 import '../../utils/helpers/my_snackbar.dart';
-import '../../utils/helpers/shared_pref.dart';
 import '../../views/widgets/custom_button.dart';
-
 import '../widgets/custom_text_field.dart';
+import '../widgets/logout_widget.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -25,7 +22,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final String _userName = CacheData.getData(key: 'currentUser');
   File? _pickedImage;
   late TextEditingController _nameController;
   late TextEditingController _priceController;
@@ -95,8 +91,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     fit: BoxFit.cover,
                                   ),
                                 )
-                              : Icon(Icons.add_a_photo_rounded,
-                                  size: 20.sp, color: ColorManager.brown),
+                              : Icon(
+                                  Icons.add_a_photo_rounded,
+                                  size: 20.sp,
+                                  color: context.iconTheme.color,
+                                ),
                           onPressed: () =>
                               context.read<PickImageCubit>().pickImage(),
                         );
@@ -114,57 +113,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Column(
               children: [
                 IconButton(
-                  hoverColor: ColorManager.white,
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(
-                      ColorManager.white.withOpacity(0.7),
-                    ),
-                  ),
                   onPressed: () => Navigator.pop(context),
-                  icon: Icon(
-                    size: 7.sp,
-                    Icons.arrow_back,
-                    color: ColorManager.brown,
-                  ),
+                  icon: const Icon(Icons.arrow_back),
                 ),
                 SizedBox(height: 10.h),
-                Tooltip(
-                  margin: const EdgeInsets.only(top: 5),
-                  height: 34,
-                  message: 'Logout',
-                  decoration: BoxDecoration(
-                      color: ColorManager.brown,
-                      borderRadius: BorderRadius.circular(4)),
-                  child: BlocListener<AuthStatus, AuthStatusState>(
-                    listener: (context, state) {
-                      if (state is Logout) {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, RouteManager.login, (route) => false);
-                        customSnackBar(context, 'Logout Successfully!');
-                      }
-
-                      if (state is LogoutFailure) {
-                        customSnackBar(context, 'There was an error!');
-                      }
-                    },
-                    child: IconButton(
-                      hoverColor: ColorManager.white,
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(
-                          ColorManager.white.withOpacity(0.7),
-                        ),
-                      ),
-                      icon: Icon(
-                        size: 7.sp,
-                        Icons.logout,
-                        color: ColorManager.brown,
-                      ),
-                      onPressed: () {
-                        context.read<AuthStatus>().logout();
-                      },
-                    ),
-                  ),
+                IconButton(
+                  onPressed: () =>
+                      Navigator.pushNamed(context, RouteManager.archive),
+                  icon: const Icon(Icons.archive),
                 ),
+                SizedBox(height: 10.h),
+                const LogoutWidget(),
               ],
             ),
           ),
@@ -178,7 +137,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               height: context.height / 1.2,
               decoration: BoxDecoration(
                 color: ColorManager.white,
-                // borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
                     offset: const Offset(1, -1),
@@ -229,7 +187,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 final image = _pickedImage!.path;
                 context
                     .read<FruitsRepositoryCubit>()
-                    .addUserJuice(name, price, image);
+                    .addUserJuice(name: name, price: price, image: image);
                 _clearForm();
               }
             },
@@ -261,17 +219,85 @@ class _SettingsScreenState extends State<SettingsScreen> {
         style: context.textTheme.bodyLarge,
       ),
       subtitle: Text(
-        '\$${juice.price}',
+        '${juice.price} EGP',
         style: context.textTheme.displayMedium,
       ),
-      trailing: IconButton(
-        icon: Icon(
-          Icons.delete,
-          size: 7.sp,
-          color: ColorManager.brown,
-        ),
-        onPressed: () => _showConfirmationDialog(juice),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            icon: Icon(
+              Icons.edit,
+              color: context.iconTheme.color,
+            ),
+            onPressed: () => _showUpdatePriceDialog(juice),
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.delete,
+              color: context.iconTheme.color,
+            ),
+            onPressed: () => _showConfirmationDialog(juice),
+          ),
+        ],
       ),
+    );
+  }
+
+  void _showUpdatePriceDialog(JuiceModel juice) {
+    TextEditingController priceController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          backgroundColor: ColorManager.white,
+          title: Text(
+            'Update Price for ${juice.name}',
+            style: context.textTheme.bodyLarge,
+          ),
+          content: MyTextFormField(
+            controller: priceController,
+            keyboardType: TextInputType.number,
+            hintText: 'Enter new price',
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: ButtonStyle(
+                overlayColor: WidgetStatePropertyAll(
+                    ColorManager.correct.withOpacity(0.3)),
+              ),
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+              child: Text(
+                'Cancel',
+                style: context.textTheme.displayMedium
+                    ?.copyWith(color: ColorManager.correct),
+              ),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                overlayColor:
+                    WidgetStatePropertyAll(ColorManager.error.withOpacity(0.3)),
+              ),
+              onPressed: () {
+                int newPrice =
+                    int.tryParse(priceController.text) ?? juice.price;
+                context.read<FruitsRepositoryCubit>().updateJuicePrice(
+                      juice: juice,
+                      newPrice: newPrice,
+                    );
+                Navigator.of(dialogContext).pop();
+              },
+              child: Text(
+                'Update',
+                style: context.textTheme.displayMedium
+                    ?.copyWith(color: ColorManager.error),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -295,9 +321,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 overlayColor: WidgetStatePropertyAll(
                     ColorManager.correct.withOpacity(0.3)),
               ),
-              onPressed: () {
-                Navigator.of(dialogContext).pop();
-              },
+              onPressed: () => Navigator.of(dialogContext).pop(),
               child: Text(
                 'Cancel',
                 style: context.textTheme.displayMedium
@@ -310,7 +334,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     WidgetStatePropertyAll(ColorManager.error.withOpacity(0.3)),
               ),
               onPressed: () {
-                _removeJuice(juice);
+                context
+                    .read<FruitsRepositoryCubit>()
+                    .removeUserJuice(juiceName: juice.name);
+
                 Navigator.of(dialogContext).pop();
               },
               child: Text(
@@ -323,10 +350,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         );
       },
     );
-  }
-
-  void _removeJuice(JuiceModel juice) {
-    context.read<FruitsRepositoryCubit>().removeUserJuice(juice.name);
   }
 
   void _clearForm() {
