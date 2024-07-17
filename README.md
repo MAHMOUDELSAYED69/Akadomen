@@ -76,23 +76,23 @@ By following these steps, you'll have the Akadomen desktop app and running on yo
 
 The app uses the following dependencies:
 
-- **audioplayers**: Play audio files.
-- **bloc**: State management solution.
-- **cupertino_icons**: Cupertino styled icons.
-- **file_picker**: Pick files from the device.
-- **flutter**: Flutter SDK.
-- **flutter_bloc**: Integration of bloc state management.
-- **flutter_screenutil**: Screen size and device pixel ratio adaptation.
-- **intl**: Internationalization and localization.
-- **meta**: Support for annotations.
-- **path**: Path manipulation utilities.
-- **path_provider**: Access to commonly used locations on the filesystem.
-- **pdf**: PDF creation and manipulation.
-- **printing**: Print documents and share PDFs.
-- **shared_preferences**: Persistent storage for simple data.
-- **sqflite**: SQLite plugin for Flutter.
-- **sqflite_common_ffi**: SQLite FFI support.
-- **window_manager**: Window management for desktop applications.
+- **`audioplayers`**: Play audio files.
+- **`bloc`**: State management solution.
+- **`cupertino_icons`**: Cupertino styled icons.
+- **`file_picker`**: Pick files from the device.
+- **`flutter`**: Flutter SDK.
+- **`flutter_bloc`**: Integration of bloc state management.
+- **`flutter_screenutil`**: Screen size and device pixel ratio adaptation.
+- **`intl`**: Internationalization and localization.
+- **`meta`**: Support for annotations.
+- **`path`**: Path manipulation utilities.
+- **`path_provider`**: Access to commonly used locations on the filesystem.
+- **`pdf`**: PDF creation and manipulation.
+- **`printing`**: Print documents and share PDFs.
+- **`shared_preferences`**: Persistent storage for simple data.
+- **`sqflite`**: SQLite plugin for Flutter.
+- **`sqflite_common_ffi`**: SQLite FFI support.
+- **`window_manager`**: Window management for desktop applications.
 
 ## Usage
 
@@ -123,4 +123,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have any questions or suggestions, feel free to reach out:
 
 Email: [gcfjxvkj@gmail.com]         
-GitHub: [MAHMOUDELSAYED69]
+GitHub: [[MAHMOUDELSAYED69](https://github.com/MAHMOUDELSAYED69)]
