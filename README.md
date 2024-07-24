@@ -105,22 +105,10 @@ The app uses the following dependencies:
 7. **`View Invoices`**: Access the archive to view all stored invoices.
 8. **`Logout`**: Safely log out when done.
 
-## Contributing
-Contributions are welcome! Follow these steps to contribute:
-
-Fork the repository.
-Create a new branch: git checkout -b feature/YourFeature
-Make your changes and commit them: git commit -m 'Add some feature'
-Push to the branch: git push origin feature/YourFeature
-Submit a pull request.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-
 ## Contact
-If you have any questions or suggestions, feel free to reach out:
 
-Email: [gcfjxvkj@gmail.com]         
-GitHub: [[MAHMOUDELSAYED69](https://github.com/MAHMOUDELSAYED69)]
+For any questions or feedback, please reach out via email: [gcfjxvkj@gmail.com](gcfjxvkj@gmail.com)
