@@ -1,6 +1,6 @@
 # Akadomen
 
-Akadomen is a robust `Flutter desktop application` designed for efficiently managing a juice shop. It encompasses essential functionalities such as account creation, secure login, and logout processes. Additionally, it facilitates comprehensive juice management, enabling users to add, remove, and update juice entries seamlessly. The application also includes a feature for generating detailed invoices for each transaction, which are then securely stored in the local database. The intuitive, user-friendly interface ensures a smooth and efficient experience for shop owners and customers alike.
+Akadomen is a robust Flutter desktop application designed for efficiently managing a juice shop. Leveraging sqflite for local database management and Cubit for state management, it encompasses essential functionalities such as account creation, secure login, and logout processes. Additionally, it facilitates comprehensive juice management, enabling users to fetch, add, remove, and update juice entries seamlessly. The application also includes a feature for generating detailed invoices for each transaction, which are then securely stored in the local database. The intuitive, user-friendly interface ensures a smooth and efficient experience for shop owners and customers alike.
 
 ## Features
 
