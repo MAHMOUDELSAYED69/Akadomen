@@ -1,6 +1,6 @@
 # Akadomen
 
-Akadomen is a robust `Flutter desktop application` designed for efficiently managing a juice shop. It encompasses essential functionalities such as account creation, secure login, and logout processes. Additionally, it facilitates comprehensive juice management, enabling users to add, remove, and update juice entries seamlessly. The application also includes a feature for generating detailed invoices for each transaction, which are then securely stored in the local database. The intuitive, user-friendly interface ensures a smooth and efficient experience for shop owners and customers alike.
+Akadomen is a robust Flutter desktop application designed for efficiently managing a juice shop. Leveraging sqflite for local database management and Cubit for state management, it encompasses essential functionalities such as account creation, secure login, and logout processes. Additionally, it facilitates comprehensive juice management, enabling users to fetch, add, remove, and update juice entries seamlessly. The application also includes a feature for generating detailed invoices for each transaction, which are then securely stored in the local database. The intuitive, user-friendly interface ensures a smooth and efficient experience for shop owners and customers alike.
 
 ## Features
 
@@ -105,22 +105,10 @@ The app uses the following dependencies:
 7. **`View Invoices`**: Access the archive to view all stored invoices.
 8. **`Logout`**: Safely log out when done.
 
-## Contributing
-Contributions are welcome! Follow these steps to contribute:
-
-Fork the repository.
-Create a new branch: git checkout -b feature/YourFeature
-Make your changes and commit them: git commit -m 'Add some feature'
-Push to the branch: git push origin feature/YourFeature
-Submit a pull request.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-
 ## Contact
-If you have any questions or suggestions, feel free to reach out:
 
-Email: [gcfjxvkj@gmail.com]         
-GitHub: [[MAHMOUDELSAYED69](https://github.com/MAHMOUDELSAYED69)]
+For any questions or feedback, please reach out via email: [gcfjxvkj@gmail.com](gcfjxvkj@gmail.com)
