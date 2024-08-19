@@ -2,18 +2,21 @@ import 'package:akadomen/utils/helpers/shared_pref.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../database/sql.dart';
+import '../../database/hive.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitial());
-  final SqlDb _sqlDb = SqlDb();
+  final _hiveDb = HiveDb();
 
-  Future<void> login(
-      {required String username, required String password}) async {
+  Future<void> login({
+    required String username,
+    required String password,
+  }) async {
     try {
-      final user = await _sqlDb.getUser(username, password);
+      final user = await _hiveDb.getUser(username, password);
+
       if (user != null) {
         await CacheData.setData(key: 'isUserLogin', value: true);
         await CacheData.setData(key: 'currentUser', value: username);

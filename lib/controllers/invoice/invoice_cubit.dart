@@ -1,3 +1,4 @@
+import 'package:akadomen/database/hive.dart';
 import 'package:akadomen/utils/constants/images.dart';
 import 'package:akadomen/utils/helpers/shared_pref.dart';
 import 'package:bloc/bloc.dart';
@@ -9,8 +10,6 @@ import 'package:printing/printing.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
-
-import '../../database/sql.dart';
 import '../../models/juice.dart';
 import '../../repositories/fruits.dart';
 
@@ -18,7 +17,7 @@ part 'invoice_state.dart';
 
 class InvoiceCubit extends Cubit<InvoiceState> {
   InvoiceCubit() : super(InvoiceInitial());
-  final SqlDb _sqlDb = SqlDb();
+  final HiveDb _hiveDb = HiveDb();
 
   Future<void> generateInvoice(
       {required Map<JuiceModel, int>? juiceCounts,
@@ -57,7 +56,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
       final formattedTime = DateFormat('HH:mm:ss').format(now);
 
       // Get the next invoice number for the user
-      int? invoiceNumber = await _sqlDb
+      int? invoiceNumber = await _hiveDb
           .getNextInvoiceNumber(CacheData.getData(key: 'currentUser'));
 
       if (invoiceNumber == null) {
