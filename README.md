@@ -1,6 +1,6 @@
 # Akadomen
 
-Akadomen is a robust Flutter desktop application designed for efficiently managing a juice shop. Leveraging sqflite for local database management and Cubit for state management, it encompasses essential functionalities such as account creation, secure login, and logout processes. Additionally, it facilitates comprehensive juice management, enabling users to fetch, add, remove, and update juice entries seamlessly. The application also includes a feature for generating detailed invoices for each transaction, which are then securely stored in the local database. The intuitive, user-friendly interface ensures a smooth and efficient experience for shop owners and customers alike.
+Akadomen is a robust Flutter desktop application designed for efficiently managing a juice shop. Leveraging Hive for local database management and Cubit for state management, it encompasses essential functionalities such as account creation, secure login, and logout processes. Additionally, it facilitates comprehensive juice management, enabling users to fetch, add, remove, and update juice entries seamlessly. The application also includes a feature for generating detailed invoices for each transaction, which are then securely stored in the local database. The intuitive, user-friendly interface ensures a smooth and efficient experience for shop owners and customers alike.
 
 ## Features
 
@@ -78,10 +78,11 @@ The app uses the following dependencies:
 
 - **`audioplayers`**: Play audio files.
 - **`bloc`**: State management solution.
-- **`cupertino_icons`**: Cupertino styled icons.
 - **`file_picker`**: Pick files from the device.
 - **`flutter`**: Flutter SDK.
 - **`flutter_bloc`**: Integration of bloc state management.
+- **`hive:`**: Lightweight NoSQL database for Flutter apps.
+- **`hive_flutter`**: Flutter integration for Hive database operations.
 - **`flutter_screenutil`**: Screen size and device pixel ratio adaptation.
 - **`intl`**: Internationalization and localization.
 - **`meta`**: Support for annotations.
@@ -90,9 +91,14 @@ The app uses the following dependencies:
 - **`pdf`**: PDF creation and manipulation.
 - **`printing`**: Print documents and share PDFs.
 - **`shared_preferences`**: Persistent storage for simple data.
-- **`sqflite`**: SQLite plugin for Flutter.
-- **`sqflite_common_ffi`**: SQLite FFI support.
 - **`window_manager`**: Window management for desktop applications.
+
+#### dev_dependencies:
+
+- **`hive_generator`**: Generates type adapters for Hive database.
+- **`build_runner`**: Automates code generation tasks in Flutter.
+- **`flutter_launcher_icons`**: Creates app launcher icons for Flutter apps.
+- **`flutter_lints`**: Provides recommended linter rules for Flutter projects.
 
 ## Usage
 
