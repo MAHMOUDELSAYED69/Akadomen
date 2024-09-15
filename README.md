@@ -16,29 +16,18 @@ Akadomen is a robust Flutter desktop application designed for efficiently managi
 - **`User-Friendly UI`**: Intuitive interface for easy navigation and use.
 
 ## Screenshots
-
-<table>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/0df6f284-c9bf-49bc-83fa-ace7147b9d47" alt="Screenshot 1" /></td>
-    <td><img src="https://github.com/user-attachments/assets/0a0b87fe-f2c1-487f-a028-d71ceaa46910" alt="Screenshot 2" /></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/afbdd634-40d7-4e4f-9991-f1fadf55d540" alt="Screenshot 3" /></td>
-    <td><img src="https://github.com/user-attachments/assets/12f93f98-ec53-429e-a318-e41b507f165d" alt="Screenshot 4" /></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/89718cf6-baef-4a95-9192-da49e715b8d1" alt="Screenshot 5" /></td>
-    <td><img src="https://github.com/user-attachments/assets/417872ff-b652-476b-8a26-df83f02d4539" alt="Screenshot 6" /></td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/a6394714-154e-4b41-9016-1c03c9a5e8bf" alt="Screenshot 7" /></td>
-    <td><img src="https://github.com/user-attachments/assets/037d85cf-7820-4198-ad19-8208929c090d" alt="Screenshot 8" /></td>
-  </tr> 
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/d45bdb87-0666-4371-9313-37159ea8a146" alt="Screenshot 9" /></td>
-    <td><img src="https://github.com/user-attachments/assets/ceddde10-7ffc-4699-8680-52f4cb77e437" alt="Screenshot 10" width="50%"/></td>
-  </tr>
-</table>
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://github.com/user-attachments/assets/0df6f284-c9bf-49bc-83fa-ace7147b9d47" alt="Screenshot 1" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/0a0b87fe-f2c1-487f-a028-d71ceaa46910" alt="Screenshot 2" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/afbdd634-40d7-4e4f-9991-f1fadf55d540" alt="Screenshot 3" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/12f93f98-ec53-429e-a318-e41b507f165d" alt="Screenshot 4" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/89718cf6-baef-4a95-9192-da49e715b8d1" alt="Screenshot 5" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/417872ff-b652-476b-8a26-df83f02d4539" alt="Screenshot 6" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/a6394714-154e-4b41-9016-1c03c9a5e8bf" alt="Screenshot 7" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/037d85cf-7820-4198-ad19-8208929c090d" alt="Screenshot 8" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/d45bdb87-0666-4371-9313-37159ea8a146" alt="Screenshot 9" style="width: 48%;"/>
+  <img src="https://github.com/user-attachments/assets/ceddde10-7ffc-4699-8680-52f4cb77e437" alt="Screenshot 10" style="width: 21%;"/>
+</div>
 
 ## Installation
 
