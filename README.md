@@ -15,7 +15,6 @@ Akadomen is a robust Flutter desktop application designed for efficiently managi
 - **`Update Juice Price`**: Modify the pricing of existing juice items.
 - **`User-Friendly UI`**: Intuitive interface for easy navigation and use.
 
-
 ## Screenshots
 <div style="display: flex; justify-content: space-between;">
   <img src="https://github.com/user-attachments/assets/0df6f284-c9bf-49bc-83fa-ace7147b9d47" alt="Screenshot 1" style="width: 48%;"/>
