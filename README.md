@@ -94,7 +94,6 @@ The app uses the following dependencies:
 - **`window_manager`**: Window management for desktop applications.
 
 #### dev_dependencies:
-
 - **`hive_generator`**: Generates type adapters for Hive database.
 - **`build_runner`**: Automates code generation tasks in Flutter.
 - **`flutter_launcher_icons`**: Creates app launcher icons for Flutter apps.

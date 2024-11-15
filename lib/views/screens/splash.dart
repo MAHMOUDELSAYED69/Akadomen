@@ -32,10 +32,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _goToNextScreen() async {
-    await Future.delayed(
-      const Duration(seconds: 3),
-      () => context.read<AuthStatus>().checkLoginStatus(),
-    );
+    await Future.delayed(const Duration(seconds: 3));
+    if (mounted) {
+      context.read<AuthStatus>().checkLoginStatus();
+    }
   }
 
   @override
